@@ -1,211 +1,316 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Feliz Día del Novio 💖</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Feliz Día del Novio ❤</title>
+
+  <!-- =========================
+       AÑADE AQUÍ TU FUENTE "Clavel"
+       O SUBE UN ARCHIVO .woff/.ttf AL REPO Y CAMBIA LA RUTA ABAJO
+       ========================= -->
+  <!--
+    Opción A (recomendada si subes el archivo clavel.woff2 al repo):
+      @font-face { font-family: "ClavelCustom"; src: url('clavel.woff2') format('woff2'); font-weight: normal; font-style: normal; }
+    Opción B (si existe en Google Fonts puedes cambiar por @import).
+  -->
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(to right, #ff9a9e, #fad0c4);
-      text-align: center;
-      color: #fff;
+    /* ======== Cambia esto si subiste tu font: ver nota arriba ======== */
+    @font-face {
+      font-family: "ClavelCustom";
+      /* si subes la fuente al repo pon aquí el nombre del archivo, por ejemplo 'Clavel-Regular.woff2' */
+      src: url('Clavel-Regular.woff2') format('woff2');
+      font-weight: normal;
+      font-style: normal;
+      font-display: swap;
     }
 
-    h1 {
-      margin: 20px;
-      font-size: 2.5em;
-      text-shadow: 2px 2px #ff6f91;
+    :root{
+      --text-color: #000000; /* color del texto indicado: negro */
+      --accent: #ff4f81;
+      --heart: "❤";
     }
 
-    /* Menú */
-    nav {
-      background: rgba(255, 105, 180, 0.9);
-      padding: 10px;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
-    nav button {
-      margin: 5px;
-      padding: 10px 15px;
-      border: none;
-      border-radius: 10px;
-      background: #fff;
-      color: #ff4f81;
-      font-weight: bold;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-    nav button:hover {
-      background: #ffdde1;
+    /* ====== fondo: usa tu collage (coloca el nombre del archivo en BACKGROUND_IMAGE_VARIABLE dentro del script) ====== */
+    html,body{height:100%; margin:0;}
+    body{
+      font-family: "ClavelCustom", Arial, sans-serif;
+      color: var(--text-color);
+      /* background se seteará por JS para que puedas cambiar la ruta fácilmente */
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      display:flex;
+      flex-direction:column;
+      min-height:100vh;
+      align-items:center;
+      justify-content:flex-start;
     }
 
-    section {
-      display: none;
-      padding: 20px;
-      animation: fadeIn 0.8s;
+    /* ====== barra de opciones (botones) ====== */
+    nav{
+      margin-top:20px;
+      display:flex;
+      gap:12px;
+      justify-content:center;
+      align-items:center;
+      flex-wrap:wrap;
+      z-index:5;
     }
-    section.active {
-      display: block;
+    nav .tab-btn{
+      background: rgba(255,255,255,0.85);
+      border: 2px solid rgba(0,0,0,0.06);
+      padding:10px 16px;
+      border-radius:10px;
+      cursor:pointer;
+      font-weight:700;
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      color: var(--text-color);
+      transition: transform .12s ease;
     }
-    @keyframes fadeIn {
-      from {opacity: 0;}
-      to {opacity: 1;}
-    }
+    nav .tab-btn:hover{ transform: translateY(-3px); }
 
-    /* Collage */
-    .collage {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      margin: 20px;
+    /* ====== contenedor central (las secciones aparecen centradas verticalmente) ====== */
+    .panel {
+      width: 92%;
+      max-width: 920px;
+      min-height: calc(100vh - 140px);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding: 30px;
+      box-sizing: border-box;
+      text-align:center;
+      z-index:2;
+      /* fondo semitransparente para legibilidad */
+      background: rgba(255,255,255,0.8);
+      border-radius: 18px;
+      margin: 24px 0 60px 0;
     }
-    .collage img {
-      width: 100%;
-      border-radius: 15px;
-      box-shadow: 0px 4px 8px rgba(0,0,0,0.3);
+    section{ display:none; width:100%; }
+
+    section.active { display:block; }
+
+    /* ====== estilos para las secciones particulares ====== */
+    .center-column { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px; }
+
+    /* Contador estilo "cuadrados" */
+    .count-grid { display:grid; grid-template-columns: repeat(4, 1fr); gap:12px; width:80%; max-width:700px; margin: 12px auto;}
+    .count-box {
+      background: white;
+      color: var(--text-color);
+      padding: 14px;
+      border-radius:10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+      font-weight:700;
+      min-height:80px;
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
     }
+    .count-label { font-size:0.9rem; opacity:0.8; font-weight:600; }
+
+    /* Collage / Rompecabezas (3x3 por defecto) */
+    .puzzle-wrap { display:flex; flex-direction:column; align-items:center; gap:12px; }
+    .puzzle { width: 360px; height: 360px; position:relative; display:grid; grid-template-columns: repeat(3,1fr); grid-template-rows: repeat(3,1fr); gap:2px; }
+    .tile {
+      background-size: 360px 360px; /* ajusta si cambias el tamaño */
+      background-position: 0 0;
+      cursor:pointer;
+      user-select:none;
+      transition: transform .12s ease;
+    }
+    .tile.blank { background: none; cursor: default; }
 
     /* Carta */
-    #carta {
-      margin: 20px auto;
-      width: 80%;
-      font-size: 20px;
-      line-height: 1.6;
-      text-align: justify;
-      background: rgba(255,255,255,0.2);
-      padding: 20px;
-      border-radius: 15px;
-      color: #fff;
+    .card-img { width: 420px; height: 280px; background-size: cover; background-position:center; border-radius:12px; position:relative; display:flex; align-items:center; justify-content:center; }
+    .card-text {
+      width:80%;
+      height:60%;
+      background: rgba(255,255,255,0.7);
+      color: var(--text-color);
+      padding:16px;
+      border-radius:8px;
+      text-align:left;
+      overflow:auto;
     }
+    .card-edit { display:flex; gap:8px; margin-top:8px; }
 
-    /* Juego */
-    #botones button {
-      font-size: 20px;
-      margin: 10px;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      background: #ff6f91;
-      color: white;
-      transition: 0.3s;
+    /* Trivia */
+    .trivia-wrap { display:flex; flex-direction:column; align-items:center; gap:12px; width:100%; }
+    .question-box { background:white; padding:18px; border-radius:10px; width:80%; max-width:700px; color:var(--text-color); box-shadow:0 6px 18px rgba(0,0,0,0.06);}
+    .options { display:grid; gap:10px; margin-top:8px; }
+    .opt-btn {
+      background: #fff;
+      border:2px solid rgba(0,0,0,0.06);
+      padding:12px;
+      border-radius:10px;
+      cursor:pointer;
+      font-weight:700;
     }
-    #botones button:hover {
-      transform: scale(1.1);
-    }
+    .opt-btn.correct { border-color: #4caf50; background:#eaf8ee; }
+    .opt-btn.wrong { border-color: #ff4d4d; background:#ffecea; }
 
-    /* Corazones animados */
-    .corazon {
-      position: fixed;
-      top: -10px;
-      font-size: 24px;
-      animation: caer 5s linear infinite;
-    }
-    @keyframes caer {
-      0% { transform: translateY(0); }
-      100% { transform: translateY(100vh); }
+    /* mensaje solucion puzzle */
+    #puzzle-msg { margin-top:8px; font-weight:700; color:var(--text-color); }
+
+    /* responsive */
+    @media (max-width:600px){
+      .count-grid { grid-template-columns: repeat(2,1fr); }
+      .puzzle { width: 300px; height:300px; background-size: 300px 300px; }
     }
   </style>
 </head>
 <body>
-  <h1>💘 Feliz Día del Novio 💘</h1>
 
-  <!-- Menú -->
+  <!-- ===========================
+       NAV (botones) --> 
   <nav>
-    <button onclick="mostrar('musica')">🎶 Música</button>
-    <button onclick="mostrar('contador')">📅 Nuestro contador</button>
-    <button onclick="mostrar('collage')">📸 Collage</button>
-    <button onclick="mostrar('carta')">💌 Carta</button>
-    <button onclick="mostrar('juego')">🎮 Jueguito</button>
+    <button class="tab-btn" onclick="showTab('music')">🎶 Música</button>
+    <button class="tab-btn" onclick="showTab('counter')">📅 Contador</button>
+    <button class="tab-btn" onclick="showTab('collage')">🖼️ Collage</button>
+    <button class="tab-btn" onclick="showTab('letter')">💌 Carta</button>
+    <button class="tab-btn" onclick="showTab('trivia')">🎮 Jueguito</button>
   </nav>
 
-  <!-- Secciones -->
-  <section id="musica" class="active">
-    <h2>🎶 Nuestra canción</h2>
-    <p>Dale clic para escuchar: 
-      <a href="https://www.youtube.com/watch?v=XXXX" target="_blank">Haz clic aquí</a>
-    </p>
-  </section>
+  <!-- contenedor central -->
+  <div class="panel">
+    <!-- MUSIC -->
+    <section id="music" class="active center-column">
+      <div style="max-width:820px;">
+        <h2 style="margin:0 0 6px 0;">Nuestra canción ❤</h2>
+        <p style="margin:0 0 12px 0; font-weight:600;">Dale clic para escuchar:</p>
+        <!-- CAMBIA EL LINK EN LA VARIABLE YOUTUBE_LINK DEL SCRIPT -->
+        <a id="youtube-link" href="#" target="_blank" style="padding:10px 16px; background:#fff; color:var(--text-color); border-radius:10px; font-weight:700; text-decoration:none;">Haz clic aquí</a>
+      </div>
+    </section>
 
-  <section id="contador">
-    <h2>📅 Nuestro tiempo juntos</h2>
-    <div id="contadorDias"></div>
-  </section>
+    <!-- COUNTER -->
+    <section id="counter" class="center-column">
+      <div style="width:100%;">
+        <h2 style="margin:0 0 6px 0;">Nuestro tiempo juntos ❤</h2>
+        <div class="count-grid" id="count-grid">
+          <div class="count-box"><div class="count-value" id="months">0</div><div class="count-label">Meses</div></div>
+          <div class="count-box"><div class="count-value" id="days">0</div><div class="count-label">Días</div></div>
+          <div class="count-box"><div class="count-value" id="hours">0</div><div class="count-label">Horas</div></div>
+          <div class="count-box"><div class="count-value" id="minutes">0</div><div class="count-label">Minutos</div></div>
+          <div class="count-box"><div class="count-value" id="seconds">0</div><div class="count-label">Segundos</div></div>
+        </div>
+      </div>
+    </section>
 
-  <section id="collage">
-    <h2>📸 Nuestros Momentos</h2>
-    <div class="collage">
-      <img src="foto1.jpg">
-      <img src="foto2.jpg">
-      <img src="foto3.jpg">
-      <img src="foto4.jpg">
-      <img src="foto5.jpg">
-      <img src="foto6.jpg">
-    </div>
-  </section>
+    <!-- COLLAGE / PUZZLE -->
+    <section id="collage" class="center-column">
+      <div class="puzzle-wrap">
+        <h2 style="margin:0;">Rompecabezas ❤</h2>
+        <p style="margin:0 0 8px 0;">Se formará una foto (la que subas como PUZZLE_IMAGE). Cuando termine, abajo aparece tu mensaje.</p>
+        <div class="puzzle" id="puzzle"></div>
 
-  <section id="carta">
-    <h2>💌 Mi Cartita</h2>
-    <div id="textoCarta"></div>
-  </section>
+        <div style="display:flex; gap:10px; margin-top:10px;">
+          <button onclick="shufflePuzzle()" class="tab-btn" style="background:#fff;">Mezclar</button>
+          <button onclick="resetPuzzle()" class="tab-btn" style="background:#fff;">Reiniciar</button>
+        </div>
 
-  <section id="juego">
-    <h2>🎮 Preguntita</h2>
-    <p>¿Quieres ser mi novio siempre? 😍</p>
-    <div id="botones">
-      <button onclick="aceptar()">Sí 💖</button>
-      <button id="noBtn" onmouseover="moverBoton()">No 😢</button>
-    </div>
-    <p id="respuesta"></p>
-  </section>
+        <div id="puzzle-msg" contenteditable="false" style="margin-top:12px;"></div>
 
+        <div style="margin-top:8px; font-size:0.9rem; opacity:0.8;">
+          Para editar el mensaje que aparece al completar el rompecabezas, edita la variable <code>PUZZLE_SOLVED_MESSAGE</code> en el script (o usa el botón "Editar mensaje"). 
+        </div>
+        <div style="margin-top:8px;">
+          <button class="tab-btn" onclick="enablePuzzleMessageEdit()">Editar mensaje</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- LETTER -->
+    <section id="letter" class="center-column">
+      <div>
+        <h2 style="margin:0 0 8px 0;">Carta ❤</h2>
+        <div class="card-img" id="card-img" style="background-image: url('card-blank.jpg');">
+          <!-- caja editable dentro de la imagen -->
+          <div class="card-text" id="cardText" contenteditable="true" spellcheck="false" style="background: rgba(255,255,255,0.85);">
+            Escribe aquí tu carta (haz clic y edita). Cuando termines puedes copiar este texto y pegarlo en el repositorio o mantenerlo aquí (siempre que la página no se recargue perderás lo no guardado).
+          </div>
+        </div>
+        <div class="card-edit">
+          <button class="tab-btn" onclick="downloadCardText()">Guardar texto (descargar)</button>
+          <button class="tab-btn" onclick="resetCardText()">Restablecer</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- TRIVIA -->
+    <section id="trivia" class="center-column">
+      <div style="width:100%; display:flex; flex-direction:column; align-items:center;">
+        <h2 style="margin:0 0 10px 0;">Trivia ❤</h2>
+        <div class="trivia-wrap">
+          <div class="question-box">
+            <div id="questionText" style="font-size:1.12rem; font-weight:800;">Pregunta</div>
+            <div class="options" id="options"></div>
+          </div>
+
+          <div style="display:flex; gap:12px; margin-top:12px;">
+            <button class="tab-btn" onclick="nextQuestion()">Siguiente pregunta</button>
+            <button class="tab-btn" onclick="restartTrivia()">Reiniciar</button>
+          </div>
+
+          <div id="score" style="margin-top:10px; font-weight:700;"></div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ============ SCRIPT: configuración y lógica ============ -->
   <script>
-    // Función para mostrar secciones
-    function mostrar(id) {
-      document.querySelectorAll("section").forEach(sec => {
-        sec.classList.remove("active");
-      });
-      document.getElementById(id).classList.add("active");
+    /* ==========================
+       ===  CONFIGURA AQUI   ===
+       ==========================
+    */
+    // 1) Fondo principal (tu collage)
+    const BACKGROUND_IMAGE = 'collage-background.jpg'; // <-- SUBE tu collage y pon su nombre aquí
+
+    // 2) Link de YouTube
+    const YOUTUBE_LINK = 'https://www.youtube.com/watch?v=XXXX'; // <-- reemplaza con tu link
+
+    // 3) Fecha de inicio (aniversario)
+    const START_DATE = '2025-03-30T00:00:00'; // <-- ya configurado para 30-mar-2025
+
+    // 4) Rompecabezas: imagen usada y configuración (3x3)
+    const PUZZLE_IMAGE = 'puzzle-photo.jpg'; // <-- SUBE tu foto para el rompecabezas y pon su nombre aquí
+    const PUZZLE_COLS = 3;
+    const PUZZLE_ROWS = 3;
+    const TILE_SIZE = 360; // píxeles; ajusta CSS también si cambiaslo
+
+    // 5) Mensaje que aparecerá cuando se resuelva el puzzle (puedes editar aquí)
+    let PUZZLE_SOLVED_MESSAGE = "¡Felicidades! Puedes escribir tu mensaje final aquí ❤";
+
+    // 6) Carta: imagen de la "hoja" que usarás
+    const CARD_IMAGE = 'card-blank.jpg'; // <-- SUBE tu imagen de carta / hoja en blanco
+
+    // 7) Trivia: preguntas (edítalas aquí, cada 'correct' es índice 0..3)
+    const TRIVIA_QUESTIONS = [
+      { q: "¿Dónde fue nuestra primera cita?", opts: ["En el parque", "En el cine", "En un café", "En la playa"], correct: 2 },
+      { q: "¿Cuál es mi comida favorita?", opts: ["Pizza", "Sushi", "Hamburguesa", "Ensalada"], correct: 1 },
+      { q: "¿Qué ciudad queremos visitar juntos?", opts: ["París", "Tokio", "Roma", "Londres"], correct: 0 }
+    ];
+    /* ==========================
+       ===  FIN CONFIGURACIÓN ===
+       ========================== */
+
+    // set background image
+    document.body.style.backgroundImage = `url('${BACKGROUND_IMAGE}')`;
+
+    // set youtube link
+    document.getElementById('youtube-link').href = YOUTUBE_LINK;
+
+    /* ============== pestañas ============== */
+    function showTab(id){
+      document.querySelectorAll('section').forEach(s=> s.classList.remove('active'));
+      const sec = document.getElementById(id);
+      if(sec) sec.classList.add('active');
+      // centrar la vista: scrollea al centro del panel
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // Corazones animados
-    function crearCorazon() {
-      const corazon = document.createElement("div");
-      corazon.classList.add("corazon");
-      corazon.innerText = "💖";
-      corazon.style.left = Math.random() * window.innerWidth + "px";
-      document.body.appendChild(corazon);
-      setTimeout(() => { corazon.remove(); }, 5000);
-    }
-    setInterval(crearCorazon, 800);
-
-    // Contador de días
-    const fechaInicio = new Date("2025-03-30");
-    function actualizarContador() {
-      const hoy = new Date();
-      const diff = hoy - fechaInicio;
-      const dias = Math.floor(diff / (1000*60*60*24));
-      document.getElementById("contadorDias").innerText =
-        "Llevamos " + dias + " días juntos 💕";
-    }
-    actualizarContador();
-
-    // Carta animada
-    const textoCarta = "Amor, gracias por cada momento que compartimos. Eres mi alegría diaria y la razón por la que sonrío tanto. Me haces muy feliz y quiero que sigamos construyendo juntos muchos recuerdos hermosos. ¡Te amo mucho! 💖";
-    let i = 0;
-    function escribirCarta() {
-      if (i < textoCarta.length) {
-        document.getElementById("textoCarta").innerHTML += textoCarta.charAt(i);
-        i++;
-        setTimeout(escribirCarta, 50);
-      }
-    }
-    escribirCarta();
-
-    // Juego
-    function aceptar() {
-      document.getElementById("respuesta").innerText =
-        "¡Sabía que dirías que sí!
-
+    /* ============== contador detallado ============== */
+    const start = n
