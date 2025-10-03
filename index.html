@@ -1,11 +1,43 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Juego para mi novio 💕</title>
-</head>
-<body style="text-align:center; font-family:sans-serif;">
-    <h1>¡Hola amor! 😍</h1>
-    <p>Este es el inicio del jueguito que hice para ti 💖</p>
-</body>
-</html>
+  <meta charset="UTF-8">
+  <title>Juego para mi novio 💕</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 100px;
+      background: linear-gradient(to bottom, #ffe6f0, #fff0f5);
+      overflow: hidden;
+    }
+    h1 {
+      color: #d63384;
+      font-size: 2.5em;
+    }
+    button {
+      padding: 12px 25px;
+      font-size: 18px;
+      margin: 20px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    #si {
+      background-color: #4CAF50;
+      color: white;
+    }
+    #no {
+      background-color: #ff4d4d;
+      color: white;
+      position: absolute;
+    }
+    .corazon {
+      position: fixed;
+      color: red;
+      font-size: 24px;
+      animation: caer 5s linear infinite;
+    }
+    @keyframes caer {
+      0% { tra
