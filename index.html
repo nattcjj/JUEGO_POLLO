@@ -161,8 +161,17 @@
     <section id="card">
       <div class="content-box">
         <h2>Una cartita para ti 💌</h2>
-        <p>Mi amor, gracias por estos meses juntos, eres lo mejor que me ha pasado en la vida y no dejo de pensar en lo feliz que me haces. Te amo con todo mi corazón. ❤️</p>
-      </div>
+        <p>Hoy quiero decirte lo especial que eres para mí. Nuestra relación es única, porque contigo siento una conexión que nunca antes había vivido. Es como si nuestras almas se hubieran encontrado en el momento perfecto para enseñarnos lo que significa amar de verdad.
+
+Contigo cada instante se vuelve mágico, incluso las cosas más simples son hermosas si las comparto a tu lado. Me haces sentir tranquila, feliz y afortunada de tener un amor tan auténtico, tan nuestro.
+
+Gracias por ser mi compañero, mi confidente, mi alegría diaria. No hay nada en este mundo que cambie lo que somos, porque lo que tenemos es diferente, especial y eterno.
+
+Eres mi chocolatito y siempre tendrás en mí a tu quesito, que te ama con todo el corazón.
+
+Con amor,
+Att: Quesito <3
+   </div>
     </section>
 
     <section id="trivia">
@@ -262,15 +271,17 @@
 
     // Trivia
     const questions = [
-      { q: "¿Cuál es nuestra canción favorita?", options: ["Perfect", "Tú", "Amor Eterno", "Nuestra Canción"], correct: 3 },
-      { q: "¿Dónde fue nuestra primera cita?", options: ["Cine", "Parque", "Café", "Plaza"], correct: 0 },
-      { q: "¿Cuál es mi apodo favorito para ti?", options: ["Chocolatito", "Osito", "Bebé", "Amorcito"], correct: 0 }
+      { q: "¿Cuándo fue nuestro primer beso?", options: ["13 de mayo", "20 de mayo", "18 de mayo", "3 de junio"], correct: 0 },
+      { q: "¿Dónde fue nuestro primer encuentro?", options: ["En mi U", "En el portal", "En un café", "En el ecoplaza"], correct: 1 },
+      { q: "¿Qué es lo que más me gusta de ti?", options: ["Tu boca", "Tus ojos", "Tus manos", "Tu olor"], correct: 1 },
+      { q: "¿Qué nos gusta comer?", options: ["Sushi", "Lasagna", "Hamburguesa", "Salchipapa"], correct: 3 },
+
     ];
     let currentQ = 0;
 
     function loadQuestion() {
       if (currentQ >= questions.length) {
-        document.getElementById("question").innerText = "🎉 ¡Has completado la trivia!";
+        document.getElementById("question").innerText = "Te amooo";
         document.getElementById("options").innerHTML = "";
         document.getElementById("final-message").innerText = "❤️ Te amo Chocolatito ❤️";
         return;
