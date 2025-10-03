@@ -10,6 +10,7 @@
       background: url("https://github.com/nattcjj/JUEGO_POLLO/raw/main/collage-background.jpg?raw=true") no-repeat center center fixed;
       background-size: cover;
     }
+    
     nav {
       display: flex;
       justify-content: center;
@@ -25,20 +26,25 @@
       font-size: 16px;
       background: #fff;
     }
-    nav button:hover {
-      background: #ffd6e0;
-    }
+    
     .panel {
-      padding: 20px;
-    }
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh; /* hace que baje al centro de la pantalla */
+}
 
     .panel section {
       display: none;
+      width: 100%;
     }
     .panel section.active {
       display: block;
     }
-
+    nav button:hover {
+      background: #ffd6e0;
+    }
     h2 {
       text-align: center;
       color: #ff4f81;
@@ -116,6 +122,9 @@
   </style>
 </head>
 <body>
+     <header class="content-box" style="text-align:center; margin:20px auto; max-width:400px;">
+     <h1>❤Feliz Día del Novio ❤</h1>
+      </header>
   <nav>
     <button onclick="showPanel('music')">🎵 Música</button>
     <button onclick="showPanel('counter')">⏳ Tiempo</button>
@@ -154,6 +163,7 @@
         <div class="puzzle-grid" id="puzzleGrid"></div>
         <div style="text-align:center">
           <button class="reset-btn" onclick="resetPuzzle()">Reiniciar</button>
+          <button class="reset-btn" onclick="shufflePuzzle()">Mezclar</button>
         </div>
       </div>
     </section>
@@ -181,11 +191,13 @@ Att: Quesito <3
         <div id="options"></div>
         <div style="text-align:center; margin-top:15px;">
           <button class="next-btn" onclick="nextQuestion()">Siguiente</button>
-        </div>
-        <p id="final-message"></p>
+          <button class="reset-btn" onclick="resetTrivia()">Reiniciar Trivia</button>
+    <p id="score">Aciertos: 0</p>
+    <p id="final-message"></p>
       </div>
-    </section>
-  </div>
+      </div>
+      </section>
+      </div>
 
   <script>
     function showPanel(id) {
@@ -243,6 +255,7 @@ Att: Quesito <3
       emptyDiv.style.height = "100px";
       grid.appendChild(emptyDiv);
     }
+    
     function movePiece(i) {
       let emptyRow = Math.floor(emptyIndex / size);
       let emptyCol = emptyIndex % size;
@@ -263,6 +276,19 @@ Att: Quesito <3
         emptyIndex = i;
       }
     }
+    function shufflePuzzle() {
+  pieces = pieces.sort(() => Math.random() - 0.5);
+  grid.innerHTML = "";
+  pieces.forEach(piece => {
+    if (piece) grid.appendChild(piece);
+    else {
+      let emptyDiv = document.createElement("div");
+      emptyDiv.style.width = "100px";
+      emptyDiv.style.height = "100px";
+      grid.appendChild(emptyDiv);
+    }
+  });
+}
     function resetPuzzle() {
       emptyIndex = size * size - 1;
       initPuzzle();
@@ -278,34 +304,50 @@ Att: Quesito <3
 
     ];
     let currentQ = 0;
+    let score = 0;
 
     function loadQuestion() {
-      if (currentQ >= questions.length) {
-        document.getElementById("question").innerText = "Te amooo";
-        document.getElementById("options").innerHTML = "";
-        document.getElementById("final-message").innerText = "❤️ Te amo Chocolatito ❤️";
-        return;
-      }
-      let q = questions[currentQ];
-      document.getElementById("question").innerText = q.q;
-      let opts = "";
-      q.options.forEach((opt, i) => {
-        opts += `<button onclick="checkAnswer(${i})">${opt}</button>`;
-      });
-      document.getElementById("options").innerHTML = opts;
+     if (currentQ >= questions.length) {
+       document.getElementById("question").innerText = "¡Has terminado!";
+       document.getElementById("options").innerHTML = "";
+       document.getElementById("final-message").innerText = "❤️ Te amo Chocolatito ❤️";
+    return;
     }
+    let q = questions[currentQ];
+     document.getElementById("question").innerText = q.q;
+    let opts = "";
+     q.options.forEach((opt, i) => {
+     opts += `<button onclick="checkAnswer(${i})">${opt}</button>`;
+    });
+     document.getElementById("options").innerHTML = opts;
+ }
+
     function checkAnswer(i) {
-      let buttons = document.querySelectorAll("#options button");
-      buttons.forEach((btn, idx) => {
-        if (idx === questions[currentQ].correct) btn.classList.add("correct");
-        else if (idx === i) btn.classList.add("wrong");
-        btn.disabled = true;
-      });
-    }
-    function nextQuestion() {
+    let buttons = document.querySelectorAll("#options button");
+     buttons.forEach((btn, idx) => {
+    if (idx === questions[currentQ].correct) {
+     btn.classList.add("correct");
+    if (i === idx) {
+        score++;
+        document.getElementById("score").innerText = "Aciertos: " + score;
+      }
+    } else if (idx === i) btn.classList.add("wrong");
+      btn.disabled = true;
+    });
+ }
+ function nextQuestion() {
       currentQ++;
       loadQuestion();
     }
+    function resetTrivia() {
+  currentQ = 0;
+  score = 0;
+  document.getElementById("score").innerText = "Aciertos: 0";
+  document.getElementById("final-message").innerText = "";
+  loadQuestion();
+}
+
+   
     loadQuestion();
   </script>
 </body>
