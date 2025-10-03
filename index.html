@@ -2,13 +2,13 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Feliz Día del Novio ❤</title>
+  <title>Feliz dia del novio <3</title>
   <style>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: url("https://github.com/nattcjj/JUEGO_POLLO/raw/main/collage-background.jpg?raw=true") no-repeat center center fixed; /* 🔹 AQUI PONES TU IMAGEN */
-      background-size: cover;  /* hace que se ajuste a toda la pantalla */
+      background: url("https://github.com/nattcjj/JUEGO_POLLO/raw/main/collage-background.jpg?raw=true") no-repeat center center fixed;
+      background-size: cover;
     }
     nav {
       display: flex;
@@ -24,18 +24,7 @@
       cursor: pointer;
       font-size: 16px;
       background: #fff;
-      transition: 0.3s;
     }
-    
-    /* 🔹 Aquí pegas tu estilo nuevo */
-    .content-box {
-      max-width: 700px;
-      margin: 0 auto;
-      padding: 15px;
-      background: rgba(255,255,255,0.85);
-      border-radius: 12px;
-    }
-</style>
     nav button:hover {
       background: #ffd6e0;
     }
@@ -43,12 +32,11 @@
       padding: 20px;
     }
 
-    /* 🔹 Nueva regla: solo muestra la sección activa */
     .panel section {
-      display: none;   /* todas ocultas */
+      display: none;
     }
     .panel section.active {
-      display: block;  /* solo visible la activa */
+      display: block;
     }
 
     h2 {
@@ -61,13 +49,16 @@
       gap: 15px;
       font-size: 22px;
     }
-    .puzzle, .card, .trivia {
+
+    /* 🔹 Clase general para los recuadros */
+    .content-box {
       max-width: 700px;
       margin: 0 auto;
       padding: 15px;
       background: rgba(255,255,255,0.85);
       border-radius: 12px;
     }
+
     .puzzle-grid {
       display: grid;
       grid-template-columns: repeat(3, 100px);
@@ -83,289 +74,228 @@
       cursor: pointer;
     }
 
-    /* 🔹 Opciones de trivia en 2 columnas */
-#options {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr); /* dos columnas */
-  gap: 10px;
-  max-width: 400px;
-  margin: 0 auto;
-}
+    #options {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      max-width: 400px;
+      margin: 0 auto;
+    }
 
-/* 🔹 Botones de control */
-.next-btn {
-  background: #4CAF50; /* verde */
-  color: white;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  margin: 5px;
-}
-.reset-btn {
-  background: #f44336; /* rojo */
-  color: white;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  margin: 5px;
-}
-.next-btn:hover { background: #45a049; }
-.reset-btn:hover { background: #d32f2f; }
+    .next-btn {
+      background: #4CAF50;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      margin: 5px;
+    }
+    .reset-btn {
+      background: #f44336;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      margin: 5px;
+    }
+    .next-btn:hover { background: #45a049; }
+    .reset-btn:hover { background: #d32f2f; }
 
     .trivia button.correct { background: #b2f2bb; }
     .trivia button.wrong { background: #ffa8a8; }
+
+    #final-message {
+      text-align: center;
+      font-size: 20px;
+      font-weight: bold;
+      color: #ff4f81;
+      margin-top: 20px;
+    }
   </style>
 </head>
 <body>
-
-  <h1 style="text-align:center; color:#ff4f81;">Feliz Día del Novio ❤</h1>
-
   <nav>
-    <button onclick="showTab('music')">🎶 Música</button>
-    <button onclick="showTab('counter')">📅 Contador</button>
-    <button onclick="showTab('puzzle')">🖼️ Collage</button>
-    <button onclick="showTab('card')">💌 Carta</button>
-    <button onclick="showTab('trivia')">🎮 Jueguito</button>
+    <button onclick="showPanel('music')">🎵 Música</button>
+    <button onclick="showPanel('counter')">⏳ Tiempo</button>
+    <button onclick="showPanel('puzzle')">🧩 Rompecabezas</button>
+    <button onclick="showPanel('card')">💌 Carta</button>
+    <button onclick="showPanel('trivia')">❓ Trivia</button>
   </nav>
 
-  <section id="music" class="active">
-  <div class="content-box">
-    <h2>Nuestra canción ❤</h2>
-    <p style="text-align:center">
-      Dale clic para escuchar nuestra canción:<br>
-      <a href="https://youtu.be/PQlG1gznMBE?si=30PFaUKp2jIHyCBf">Haz clic aquí</a>
-    </p>
-  </div>
-</section>
-
-<section id="counter">
-  <div class="content-box">
-    <h2>Nuestro tiempo juntos ❤</h2>
-    <div class="counter">
-      <div><span id="months">0</span> Meses</div>
-      <div><span id="days">0</span> Días</div>
-      <div><span id="hours">0</span> Horas</div>
-      <div><span id="minutes">0</span> Minutos</div>
-      <div><span id="seconds">0</span> Segundos</div>
-    </div>
-  </div>
-</section>
-
-
-    <section id="puzzle">
-      <div class="puzzle">
-      <h2>Rompecabezas ❤</h2>
-      <p style="text-align:center">Complétala 💖</p>
-      <div class="puzzle-grid" id="puzzleGrid"></div>
-      <div style="text-align:center;">
-        <button onclick="shufflePuzzle()">Mezclar</button>
-        <button onclick="initPuzzle()">Reiniciar</button>
+  <div class="panel">
+    <section id="music" class="active">
+      <div class="content-box">
+        <h2>Nuestra canción ❤</h2>
+        <p style="text-align:center">
+          Dale clic para escuchar nuestra canción favorita:<br>
+          <a href="https://youtu.be/PQlG1gznMBE?si=30PFaUKp2jIHyCBf" target="_blank">Haz clic aquí</a>
+        </p>
       </div>
-      <p id="puzzleMessage" style="text-align:center; margin-top:10px;"></p>
     </section>
 
-    <section id="card">
-      <div class="card">
-      <h2>Carta ❤</h2>
-      <div class="card">
-        <textarea id="cardText" style="width:100%; height:200px;">
-Hoy quiero decirte lo especial que eres para mí. Nuestra relación es única, porque contigo siento una conexión que nunca antes había vivido. Es como si nuestras almas se hubieran encontrado en el momento perfecto para enseñarnos lo que significa amar de verdad.
-
-Contigo cada instante se vuelve mágico, incluso las cosas más simples son hermosas si las comparto a tu lado. Me haces sentir tranquila, feliz y afortunada de tener un amor tan auténtico, tan nuestro.
-
-Gracias por ser mi compañero, mi confidente, mi alegría diaria. No hay nada en este mundo que cambie lo que somos, porque lo que tenemos es diferente, especial y eterno.
-
-Eres mi chocolatito y siempre tendrás en mí a tu quesito, que te ama con todo el corazón.
-
-Con amor,
-Att: Tu quesito
-
-        </textarea>
-        <div style="margin-top:10px; text-align:center;">
-          <button onclick="downloadCard()">Guardar texto (descargar)</button>
+    <section id="counter">
+      <div class="content-box">
+        <h2>Nuestro tiempo juntos ❤</h2>
+        <div class="counter">
+          <div><span id="months">0</span> Meses</div>
+          <div><span id="days">0</span> Días</div>
+          <div><span id="hours">0</span> Horas</div>
+          <div><span id="minutes">0</span> Minutos</div>
+          <div><span id="seconds">0</span> Segundos</div>
         </div>
       </div>
     </section>
 
+    <section id="puzzle">
+      <div class="content-box">
+        <h2>Rompecabezas 🧩</h2>
+        <div class="puzzle-grid" id="puzzleGrid"></div>
+        <div style="text-align:center">
+          <button class="reset-btn" onclick="resetPuzzle()">Reiniciar</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="card">
+      <div class="content-box">
+        <h2>Una cartita para ti 💌</h2>
+        <p>Mi amor, gracias por estos meses juntos, eres lo mejor que me ha pasado en la vida y no dejo de pensar en lo feliz que me haces. Te amo con todo mi corazón. ❤️</p>
+      </div>
+    </section>
+
     <section id="trivia">
-     <div class="trivia">
-      <h2>Trivia ❤</h2>
-      <div class="trivia">
-        <p id="question">Pregunta aquí...</p>
+      <div class="content-box trivia">
+        <h2>Trivia del amor ❓</h2>
+        <p id="question"></p>
         <div id="options"></div>
-      <div style="text-align:center; margin-top:10px;">
-  <button class="next-btn" onclick="nextQuestion()">Siguiente pregunta</button>
-  <button class="reset-btn" onclick="resetTrivia()">Reiniciar</button>
-</div>
-        <p style="text-align:center;">Puntaje: <span id="score">0</span></p>
+        <div style="text-align:center; margin-top:15px;">
+          <button class="next-btn" onclick="nextQuestion()">Siguiente</button>
+        </div>
+        <p id="final-message"></p>
       </div>
     </section>
   </div>
 
   <script>
-    // 🔹 Mostrar solo la sección seleccionada
-    function showTab(id){
-      document.querySelectorAll('.panel section').forEach(s => s.classList.remove('active'));
-      const sec = document.getElementById(id);
-      if(sec) sec.classList.add('active');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    function showPanel(id) {
+      document.querySelectorAll(".panel section").forEach(sec => sec.classList.remove("active"));
+      document.getElementById(id).classList.add("active");
     }
 
-    // 🔹 Contador (ejemplo con fecha de inicio)
-    const startDate = new Date("2025-03-30T00:00:00");
-    function updateCounter(){
+    // Contador
+    const startDate = new Date("2025-03-27T00:00:00");
+    function updateCounter() {
       const now = new Date();
       let diff = now - startDate;
-      const seconds = Math.floor(diff/1000) % 60;
-      const minutes = Math.floor(diff/(1000*60)) % 60;
-      const hours = Math.floor(diff/(1000*60*60)) % 24;
-      const days = Math.floor(diff/(1000*60*60*24)) % 30;
-      const months = Math.floor(diff/(1000*60*60*24*30));
-      document.getElementById('months').textContent = months;
-      document.getElementById('days').textContent = days;
-      document.getElementById('hours').textContent = hours;
-      document.getElementById('minutes').textContent = minutes;
-      document.getElementById('seconds').textContent = seconds;
+
+      let months = Math.floor(diff / (1000 * 60 * 60 * 24 * 30.44));
+      let days = Math.floor(diff / (1000 * 60 * 60 * 24)) % 30;
+      let hours = Math.floor(diff / (1000 * 60 * 60)) % 24;
+      let minutes = Math.floor(diff / (1000 * 60)) % 60;
+      let seconds = Math.floor(diff / 1000) % 60;
+
+      document.getElementById("months").innerText = months;
+      document.getElementById("days").innerText = days;
+      document.getElementById("hours").innerText = hours;
+      document.getElementById("minutes").innerText = minutes;
+      document.getElementById("seconds").innerText = seconds;
     }
-    setInterval(updateCounter,1000);
+    setInterval(updateCounter, 1000);
 
-   // 🔹 Puzzle (con hueco vacío tipo 8-puzzle)
-const puzzleImage = "https://github.com/nattcjj/JUEGO_POLLO/raw/main/puzzle-photo.jpg?raw=true"; 
-const grid = document.getElementById("puzzleGrid");
-let order = [];
+    // Rompecabezas
+    const grid = document.getElementById("puzzleGrid");
+    const size = 3;
+    let emptyIndex = size * size - 1;
+    let pieces = [];
 
-// inicializa el puzzle con 8 piezas + 1 espacio vacío
-function initPuzzle(){
-  grid.innerHTML="";
-  order = [...Array(8).keys()]; // piezas 0–7
-  order.push(null);             // 🔹 el hueco vacío (null)
-
-  order.forEach((val, idx)=>{
-    const div=document.createElement("div");
-    div.className="puzzle-piece";
-
-    if(val !== null){
-      div.style.backgroundImage=`url(${puzzleImage})`;
-      div.style.backgroundPosition=`${-(val%3)*100}px ${-Math.floor(val/3)*100}px`;
-      div.dataset.index=val;
-      div.onclick=()=>movePiece(idx);
-    } else {
-      div.classList.add("empty"); // 🔹 casilla vacía
+    function initPuzzle() {
+      pieces = [];
+      grid.innerHTML = "";
+      for (let i = 0; i < size * size; i++) {
+        if (i === emptyIndex) {
+          pieces.push(null);
+          continue;
+        }
+        let div = document.createElement("div");
+        div.classList.add("puzzle-piece");
+        let x = (i % size) * -100;
+        let y = Math.floor(i / size) * -100;
+        div.style.backgroundImage = "url('https://github.com/nattcjj/JUEGO_POLLO/raw/main/puzzle.jpg')";
+        div.style.backgroundPosition = `${x}px ${y}px`;
+        div.dataset.index = i;
+        div.onclick = () => movePiece(i);
+        pieces.push(div);
+        grid.appendChild(div);
+      }
+      let emptyDiv = document.createElement("div");
+      emptyDiv.style.width = "100px";
+      emptyDiv.style.height = "100px";
+      grid.appendChild(emptyDiv);
     }
-    grid.appendChild(div);
-  });
-
-  document.getElementById("puzzleMessage").textContent="";
-}
-
-// mezclar las piezas
-function shufflePuzzle(){
-  for (let i = order.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [order[i], order[j]] = [order[j], order[i]];
-  }
-  renderPuzzle();
-}
-
-// dibujar el puzzle según el orden actual
-function renderPuzzle(){
-  [...grid.children].forEach((div, idx) => {
-    const val = order[idx];
-    if(val === null){
-      div.style.backgroundImage="";
-      div.className="puzzle-piece empty";
-    } else {
-      div.className="puzzle-piece";
-      div.style.backgroundImage=`url(${puzzleImage})`;
-      div.style.backgroundPosition=`${-(val%3)*100}px ${-Math.floor(val/3)*100}px`;
-      div.dataset.index=val;
-      div.onclick=()=>movePiece(idx);
+    function movePiece(i) {
+      let emptyRow = Math.floor(emptyIndex / size);
+      let emptyCol = emptyIndex % size;
+      let row = Math.floor(i / size);
+      let col = i % size;
+      if ((Math.abs(emptyRow - row) + Math.abs(emptyCol - col)) === 1) {
+        grid.innerHTML = "";
+        [pieces[i], pieces[emptyIndex]] = [pieces[emptyIndex], pieces[i]];
+        pieces.forEach(piece => {
+          if (piece) grid.appendChild(piece);
+          else {
+            let emptyDiv = document.createElement("div");
+            emptyDiv.style.width = "100px";
+            emptyDiv.style.height = "100px";
+            grid.appendChild(emptyDiv);
+          }
+        });
+        emptyIndex = i;
+      }
     }
-  });
-}
-
-// mover pieza si está junto al hueco vacío
-function movePiece(idx){
-  const emptyIdx = order.indexOf(null);
-  const validMoves = [
-    emptyIdx - 1, emptyIdx + 1,
-    emptyIdx - 3, emptyIdx + 3
-  ];
-  if(validMoves.includes(idx)){
-    [order[idx], order[emptyIdx]] = [order[emptyIdx], order[idx]];
-    renderPuzzle();
-    checkWin();
-  }
-}
-
-// verificar si se completó
-function checkWin(){
-  if(order.slice(0,8).every((v,i)=>v===i)){
-    document.getElementById("puzzleMessage").textContent="¡Te amo chocolatito! <3";
-  }
-}
-
-initPuzzle();
-
-
-    // 🔹 Carta: descarga texto
-    function downloadCard(){
-      const text=document.getElementById("cardText").value;
-      const blob=new Blob([text],{type:"text/plain"});
-      const a=document.createElement("a");
-      a.href=URL.createObjectURL(blob);
-      a.download="carta.txt";
-      a.click();
+    function resetPuzzle() {
+      emptyIndex = size * size - 1;
+      initPuzzle();
     }
+    initPuzzle();
 
-    // 🔹 Trivia
+    // Trivia
     const questions = [
-  { q: "¿Dónde fue nuestro primer encuentro?", options: ["En mi U", "En el portal 80", "En un café", "En el cloplaza"], correct: 1 },
-  { q: "¿Cuándo fue nuestro primer beso?", options: ["13 de mayo", "20 de mayo", "18 de mayo", "3 de junio"], correct: 0 },
-  { q: "¿Qué es lo que más me gusta de ti?", options: ["Tu boca", "Tus ojos", "Tus manos", "Tu olor"], correct: 1 },
-  { q: "¿Qué nos gusta comer?", options: ["Sushi", "Lasagna", "Hamburguesa", "Salchipapa"], correct: 3 },
-      
+      { q: "¿Cuál es nuestra canción favorita?", options: ["Perfect", "Tú", "Amor Eterno", "Nuestra Canción"], correct: 3 },
+      { q: "¿Dónde fue nuestra primera cita?", options: ["Cine", "Parque", "Café", "Plaza"], correct: 0 },
+      { q: "¿Cuál es mi apodo favorito para ti?", options: ["Chocolatito", "Osito", "Bebé", "Amorcito"], correct: 0 }
     ];
-    let current=0, score=0;
-    function loadQuestion(){
-      const q=questions[current];
-      document.getElementById("question").textContent=q.q;
-      const optionsDiv=document.getElementById("options");
-      optionsDiv.innerHTML="";
-      q.options.forEach((opt,i)=>{
-        const btn=document.createElement("button");
-        btn.textContent=opt;
-        btn.onclick=()=>checkAnswer(btn,i===q.correct);
-        optionsDiv.appendChild(btn);
+    let currentQ = 0;
+
+    function loadQuestion() {
+      if (currentQ >= questions.length) {
+        document.getElementById("question").innerText = "🎉 ¡Has completado la trivia!";
+        document.getElementById("options").innerHTML = "";
+        document.getElementById("final-message").innerText = "❤️ Te amo Chocolatito ❤️";
+        return;
+      }
+      let q = questions[currentQ];
+      document.getElementById("question").innerText = q.q;
+      let opts = "";
+      q.options.forEach((opt, i) => {
+        opts += `<button onclick="checkAnswer(${i})">${opt}</button>`;
+      });
+      document.getElementById("options").innerHTML = opts;
+    }
+    function checkAnswer(i) {
+      let buttons = document.querySelectorAll("#options button");
+      buttons.forEach((btn, idx) => {
+        if (idx === questions[currentQ].correct) btn.classList.add("correct");
+        else if (idx === i) btn.classList.add("wrong");
+        btn.disabled = true;
       });
     }
-    function checkAnswer(btn,correct){
-      if(correct){ btn.classList.add("correct"); score++; }
-      else btn.classList.add("wrong");
-      document.getElementById("score").textContent=score+"/"+questions.length;
+    function nextQuestion() {
+      currentQ++;
+      loadQuestion();
     }
-   function nextQuestion(){
-  if(current < questions.length - 1){
-    current++;
-    loadQuestion();
-  } else {
-    // 🔹 Cuando ya no hay más preguntas
-    document.getElementById("question").textContent = "Te amo chocolatito 💖🐻";
-    document.getElementById("options").innerHTML = "";
-  }
-}
-
-function resetTrivia(){
-  current = 0; 
-  score = 0;
-  document.getElementById("score").textContent = "0";
-  loadQuestion();
-}
-
     loadQuestion();
   </script>
 </body>
 </html>
-
