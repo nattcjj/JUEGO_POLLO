@@ -229,8 +229,6 @@ Att: Quesito <3
     setInterval(updateCounter, 1000);
 
     // Rompecabezas
-    // Rompecabezas
-// Rompecabezas Mejorado
 const grid = document.getElementById("puzzleGrid");
 const size = 3;
 const pieceSize = 100;
@@ -291,22 +289,8 @@ function movePiece(i) {
     [pieces[i], pieces[emptyIndex]] = [pieces[emptyIndex], pieces[i]];
     emptyIndex = i;
     renderPuzzle();
-
-    // Verifica si el rompecabezas está completo
-    checkPuzzleComplete();
   }
 }
-
-// Nueva función para detectar completado
-function checkPuzzleComplete() {
-  for (let i = 0; i < pieces.length - 1; i++) {
-    if (!pieces[i] || parseInt(pieces[i].dataset.index) !== i) {
-      return; // todavía no está completo
-    }
-  }
-  alert("¡Bien hecho pollo!"); // mensaje cuando se completa
-}
-
 
 function shufflePuzzle() {
   let piecesWithoutEmpty = pieces.filter(p => p !== null);
@@ -325,6 +309,7 @@ function resetPuzzle() {
 }
 
 initPuzzle();
+
 
 
     // Trivia
