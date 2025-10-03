@@ -7,7 +7,7 @@
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: url("TU_IMAGEN.jpg") no-repeat center center fixed; /* 🔹 AQUI PONES TU IMAGEN */
+      background: url("https://github.com/nattcjj/JUEGO_POLLO/raw/main/collage-background.jpg?raw=true") no-repeat center center fixed; /* 🔹 AQUI PONES TU IMAGEN */
       background-size: cover;  /* hace que se ajuste a toda la pantalla */
     }
     nav {
@@ -72,15 +72,38 @@
       background-size: 300px 300px;
       cursor: pointer;
     }
-    .trivia button {
-      display: block;
-      margin: 8px auto;
-      padding: 10px 15px;
-      border: none;
-      border-radius: 6px;
-      background: #eee;
-      cursor: pointer;
-    }
+
+    /* 🔹 Opciones de trivia en 2 columnas */
+#options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* dos columnas */
+  gap: 10px;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+/* 🔹 Botones de control */
+.next-btn {
+  background: #4CAF50; /* verde */
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin: 5px;
+}
+.reset-btn {
+  background: #f44336; /* rojo */
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin: 5px;
+}
+.next-btn:hover { background: #45a049; }
+.reset-btn:hover { background: #d32f2f; }
+
     .trivia button.correct { background: #b2f2bb; }
     .trivia button.wrong { background: #ffa8a8; }
   </style>
@@ -157,10 +180,10 @@ Att: Tu quesito
       <div class="trivia">
         <p id="question">Pregunta aquí...</p>
         <div id="options"></div>
-        <div style="text-align:center; margin-top:10px;">
-          <button onclick="nextQuestion()">Siguiente pregunta</button>
-          <button onclick="resetTrivia()">Reiniciar</button>
-        </div>
+      <div style="text-align:center; margin-top:10px;">
+  <button class="next-btn" onclick="nextQuestion()">Siguiente pregunta</button>
+  <button class="reset-btn" onclick="resetTrivia()">Reiniciar</button>
+</div>
         <p style="text-align:center;">Puntaje: <span id="score">0</span></p>
       </div>
     </section>
