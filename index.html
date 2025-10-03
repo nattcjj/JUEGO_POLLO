@@ -226,86 +226,88 @@ Att: Quesito <3
       document.getElementById("seconds").innerText = seconds;
     }
     setInterval(updateCounter, 1000);
-    
-// Rompecabezas
-// 🔹 Puzzle (con hueco vacío tipo 8-puzzle)
-const puzzleImage = "https://github.com/nattcjj/JUEGO_POLLO/raw/main/puzzle-photo.jpg?raw=true"; 
+
+    // Rompecabezas
+    // Rompecabezas
 const grid = document.getElementById("puzzleGrid");
-let order = [];
+const size = 3;
+let pieces = [];
+let emptyIndex = size * size - 1; // última posición vacía
 
-// inicializa el puzzle con 8 piezas + 1 espacio vacío
-function initPuzzle(){
-  grid.innerHTML="";
-  order = [...Array(8).keys()]; // piezas 0–7
-  order.push(null);             // 🔹 el hueco vacío (null)
+function initPuzzle() {
+  pieces = [];
+  grid.innerHTML = "";
 
-  order.forEach((val, idx)=>{
-    const div=document.createElement("div");
-    div.className="puzzle-piece";
-
-    if(val !== null){
-      div.style.backgroundImage=url(${puzzleImage});
-      div.style.backgroundPosition=${-(val%3)*100}px ${-Math.floor(val/3)*100}px;
-      div.dataset.index=val;
-      div.onclick=()=>movePiece(idx);
-    } else {
-      div.classList.add("empty"); // 🔹 casilla vacía
+  for (let i = 0; i < size * size; i++) {
+    if (i === emptyIndex) {
+      pieces.push(null);
+      let emptyDiv = document.createElement("div");
+      emptyDiv.style.width = "100px";
+      emptyDiv.style.height = "100px";
+      grid.appendChild(emptyDiv);
+      continue;
     }
+    let div = document.createElement("div");
+    div.classList.add("puzzle-piece");
+    let x = (i % size) * -100;
+    let y = Math.floor(i / size) * -100;
+    div.style.backgroundImage = "url('https://github.com/nattcjj/JUEGO_POLLO/raw/main/puzzle-photo.jpg?raw=true')";
+    div.style.backgroundPosition = `${x}px ${y}px`;
+    div.dataset.index = i;
+    div.onclick = () => movePiece(i);
+    pieces.push(div);
     grid.appendChild(div);
-  });
-
-  document.getElementById("puzzleMessage").textContent="";
+  }
 }
 
-// mezclar las piezas
-function shufflePuzzle(){
-  for (let i = order.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [order[i], order[j]] = [order[j], order[i]];
+// Mueve una pieza si está al lado del espacio vacío
+function movePiece(i) {
+  let row = Math.floor(i / size);
+  let col = i % size;
+  let emptyRow = Math.floor(emptyIndex / size);
+  let emptyCol = emptyIndex % size;
+
+  // Verifica si está al lado
+  if (Math.abs(row - emptyRow) + Math.abs(col - emptyCol) === 1) {
+    [pieces[i], pieces[emptyIndex]] = [pieces[emptyIndex], pieces[i]];
+    emptyIndex = i;
+    renderPuzzle();
   }
+}
+
+// Redibuja el tablero
+function renderPuzzle() {
+  grid.innerHTML = "";
+  for (let i = 0; i < size * size; i++) {
+    if (pieces[i]) {
+      grid.appendChild(pieces[i]);
+    } else {
+      let emptyDiv = document.createElement("div");
+      emptyDiv.style.width = "100px";
+      emptyDiv.style.height = "100px";
+      grid.appendChild(emptyDiv);
+    }
+  }
+}
+
+// Mezclar piezas
+function shufflePuzzle() {
+  for (let i = pieces.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1));
+    [pieces[i], pieces[j]] = [pieces[j], pieces[i]];
+  }
+  // Recalcular dónde está el vacío
+  emptyIndex = pieces.indexOf(null);
   renderPuzzle();
 }
 
-// dibujar el puzzle según el orden actual
-function renderPuzzle(){
-  [...grid.children].forEach((div, idx) => {
-    const val = order[idx];
-    if(val === null){
-      div.style.backgroundImage="";
-      div.className="puzzle-piece empty";
-    } else {
-      div.className="puzzle-piece";
-      div.style.backgroundImage=url(${puzzleImage});
-      div.style.backgroundPosition=${-(val%3)*100}px ${-Math.floor(val/3)*100}px;
-      div.dataset.index=val;
-      div.onclick=()=>movePiece(idx);
-    }
-  });
-}
-
-// mover pieza si está junto al hueco vacío
-function movePiece(idx){
-  const emptyIdx = order.indexOf(null);
-  const validMoves = [
-    emptyIdx - 1, emptyIdx + 1,
-    emptyIdx - 3, emptyIdx + 3
-  ];
-  if(validMoves.includes(idx)){
-    [order[idx], order[emptyIdx]] = [order[emptyIdx], order[idx]];
-    renderPuzzle();
-    checkWin();
-  }
-}
-
-// verificar si se completó
-function checkWin(){
-  if(order.slice(0,8).every((v,i)=>v===i)){
-    document.getElementById("puzzleMessage").textContent="¡Te amo chocolatito! <3";
-  }
+// Reiniciar
+function resetPuzzle() {
+  emptyIndex = size * size - 1;
+  initPuzzle();
 }
 
 initPuzzle();
-
 
     // Trivia
     const questions = [
@@ -364,3 +366,4 @@ initPuzzle();
   </script>
 </body>
 </html>
+
