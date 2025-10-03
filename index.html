@@ -2,84 +2,166 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Juego para mi novio 💕</title>
+  <title>Feliz Día del Novio 💖</title>
   <style>
     body {
+      margin: 0;
       font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #ff9a9e, #fad0c4);
       text-align: center;
-      margin-top: 100px;
-      background: linear-gradient(to bottom, #ffe6f0, #fff0f5);
-      overflow: hidden;
+      color: #fff;
     }
     h1 {
-      color: #d63384;
-      font-size: 2.5em;
+      margin-top: 40px;
+      font-size: 3em;
+      text-shadow: 2px 2px #ff6f91;
     }
-    button {
-      padding: 12px 25px;
-      font-size: 18px;
-      margin: 20px;
-      border-radius: 10px;
-      border: none;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-    #si {
-      background-color: #4CAF50;
-      color: white;
-    }
-    #no {
-      background-color: #ff4d4d;
-      color: white;
-      position: absolute;
-    }
+
+    /* Animación corazones */
     .corazon {
       position: fixed;
-      color: red;
+      top: -10px;
       font-size: 24px;
       animation: caer 5s linear infinite;
     }
     @keyframes caer {
-      0% { transform: translateY(-10vh); opacity: 1; }
-      100% { transform: translateY(100vh); opacity: 0; }
+      0% { transform: translateY(0); }
+      100% { transform: translateY(100vh); }
+    }
+
+    /* Contador */
+    #contador {
+      font-size: 24px;
+      margin: 30px 0;
+      font-weight: bold;
+    }
+
+    /* Collage */
+    .collage {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 20px;
+    }
+    .collage img {
+      width: 100%;
+      border-radius: 15px;
+      box-shadow: 0px 4px 8px rgba(0,0,0,0.3);
+    }
+
+    /* Carta */
+    #carta {
+      margin: 40px auto;
+      width: 80%;
+      font-size: 20px;
+      line-height: 1.6;
+      text-align: justify;
+      background: rgba(255,255,255,0.2);
+      padding: 20px;
+      border-radius: 15px;
+      color: #fff;
+    }
+
+    /* Juego */
+    #juego {
+      margin: 40px;
+      font-size: 22px;
+    }
+    #botones button {
+      font-size: 20px;
+      margin: 10px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      background: #ff6f91;
+      color: white;
+      transition: 0.3s;
+    }
+    #botones button:hover {
+      transform: scale(1.1);
     }
   </style>
 </head>
 <body>
-  <h1>¿Quieres estar conmigo para siempre? 💞</h1>
-  <button id="si">¡Sí! 💖</button>
-  <button id="no">No 😈</button>
+  <h1>💘 Feliz Día del Novio 💘</h1>
 
+  <!-- Música -->
+  <p>🎶 Dale clic para escuchar nuestra canción: 
+    <a href="https://www.youtube.com/watch?v=XXXX" target="_blank">Haz clic aquí</a>
+  </p>
+
+  <!-- Contador -->
+  <div id="contador"></div>
+
+  <!-- Collage -->
+  <h2>Nuestros Momentos 💕</h2>
+  <div class="collage">
+    <img src="foto1.jpg">
+    <img src="foto2.jpg">
+    <img src="foto3.jpg">
+    <img src="foto4.jpg">
+    <img src="foto5.jpg">
+    <img src="foto6.jpg">
+  </div>
+
+  <!-- Carta -->
+  <h2>Mi Cartita 💌</h2>
+  <div id="carta"></div>
+
+  <!-- Juego -->
+  <div id="juego">
+    <p>¿Quieres ser mi novio siempre? 😍</p>
+    <div id="botones">
+      <button onclick="aceptar()">Sí 💖</button>
+      <button id="noBtn" onmouseover="moverBoton()">No 😢</button>
+    </div>
+    <p id="respuesta"></p>
+  </div>
+
+  <!-- Corazones animados -->
   <script>
-    const btnNo = document.getElementById("no");
-    const btnSi = document.getElementById("si");
-
-    // Acción cuando dice Sí
-    btnSi.addEventListener("click", () => {
-      document.body.innerHTML = "<h1 style='color:#d63384; font-size:3em;'>¡Sabía que dirías que SÍ! 😍💘</h1>";
-    });
-
-    // El botón No huye
-    btnNo.addEventListener("mouseover", () => {
-      const x = Math.floor(Math.random() * (window.innerWidth - 100));
-      const y = Math.floor(Math.random() * (window.innerHeight - 50));
-      btnNo.style.left = x + "px";
-      btnNo.style.top = y + "px";
-    });
-
-    // Corazones cayendo
     function crearCorazon() {
       const corazon = document.createElement("div");
       corazon.classList.add("corazon");
-      corazon.innerHTML = "💖";
-      corazon.style.left = Math.random() * 100 + "vw";
-      corazon.style.animationDuration = (Math.random() * 3 + 2) + "s";
+      corazon.innerText = "💖";
+      corazon.style.left = Math.random() * window.innerWidth + "px";
       document.body.appendChild(corazon);
-      setTimeout(() => {
-        corazon.remove();
-      }, 5000);
+      setTimeout(() => { corazon.remove(); }, 5000);
     }
     setInterval(crearCorazon, 500);
+
+    // Contador de días
+    const fechaInicio = new Date("2025-03-30");
+    const hoy = new Date();
+    const diff = hoy - fechaInicio;
+    const dias = Math.floor(diff / (1000*60*60*24));
+    document.getElementById("contador").innerText =
+      "Llevamos " + dias + " días juntos 💕";
+
+    // Carta (animación letra por letra)
+    const textoCarta = "Amor, gracias por cada momento que compartimos. Eres mi alegría diaria y la razón por la que sonrío tanto. Me haces muy feliz y quiero que sigamos construyendo juntos muchos recuerdos hermosos. ¡Te amo mucho! 💖";
+    let i = 0;
+    function escribirCarta() {
+      if (i < textoCarta.length) {
+        document.getElementById("carta").innerHTML += textoCarta.charAt(i);
+        i++;
+        setTimeout(escribirCarta, 50);
+      }
+    }
+    escribirCarta();
+
+    // Juego
+    function aceptar() {
+      document.getElementById("respuesta").innerText =
+        "¡Sabía que dirías que sí! 💕🥰";
+    }
+    function moverBoton() {
+      const btn = document.getElementById("noBtn");
+      btn.style.position = "absolute";
+      btn.style.left = Math.random() * window.innerWidth + "px";
+      btn.style.top = Math.random() * window.innerHeight + "px";
+    }
   </script>
 </body>
 </html>
