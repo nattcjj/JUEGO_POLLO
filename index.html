@@ -11,29 +11,47 @@
       text-align: center;
       color: #fff;
     }
+
     h1 {
-      margin-top: 40px;
-      font-size: 3em;
+      margin: 20px;
+      font-size: 2.5em;
       text-shadow: 2px 2px #ff6f91;
     }
 
-    /* Animación corazones */
-    .corazon {
-      position: fixed;
-      top: -10px;
-      font-size: 24px;
-      animation: caer 5s linear infinite;
+    /* Menú */
+    nav {
+      background: rgba(255, 105, 180, 0.9);
+      padding: 10px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
     }
-    @keyframes caer {
-      0% { transform: translateY(0); }
-      100% { transform: translateY(100vh); }
+    nav button {
+      margin: 5px;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 10px;
+      background: #fff;
+      color: #ff4f81;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    nav button:hover {
+      background: #ffdde1;
     }
 
-    /* Contador */
-    #contador {
-      font-size: 24px;
-      margin: 30px 0;
-      font-weight: bold;
+    section {
+      display: none;
+      padding: 20px;
+      animation: fadeIn 0.8s;
+    }
+    section.active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
     }
 
     /* Collage */
@@ -51,7 +69,7 @@
 
     /* Carta */
     #carta {
-      margin: 40px auto;
+      margin: 20px auto;
       width: 80%;
       font-size: 20px;
       line-height: 1.6;
@@ -63,10 +81,6 @@
     }
 
     /* Juego */
-    #juego {
-      margin: 40px;
-      font-size: 22px;
-    }
     #botones button {
       font-size: 20px;
       margin: 10px;
@@ -81,46 +95,82 @@
     #botones button:hover {
       transform: scale(1.1);
     }
+
+    /* Corazones animados */
+    .corazon {
+      position: fixed;
+      top: -10px;
+      font-size: 24px;
+      animation: caer 5s linear infinite;
+    }
+    @keyframes caer {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(100vh); }
+    }
   </style>
 </head>
 <body>
   <h1>💘 Feliz Día del Novio 💘</h1>
 
-  <!-- Música -->
-  <p>🎶 Dale clic para escuchar nuestra canción: 
-    <a href="https://youtu.be/VO8D1pCYnVo?si=DmzfHAZyE79FU_sj" target="_blank">Haz clic aquí</a>
-  </p>
+  <!-- Menú -->
+  <nav>
+    <button onclick="mostrar('musica')">🎶 Música</button>
+    <button onclick="mostrar('contador')">📅 Nuestro contador</button>
+    <button onclick="mostrar('collage')">📸 Collage</button>
+    <button onclick="mostrar('carta')">💌 Carta</button>
+    <button onclick="mostrar('juego')">🎮 Jueguito</button>
+  </nav>
 
-  <!-- Contador -->
-  <div id="contador"></div>
+  <!-- Secciones -->
+  <section id="musica" class="active">
+    <h2>🎶 Nuestra canción</h2>
+    <p>Dale clic para escuchar: 
+      <a href="https://www.youtube.com/watch?v=XXXX" target="_blank">Haz clic aquí</a>
+    </p>
+  </section>
 
-  <!-- Collage -->
-  <h2>Nuestros Momentos 💕</h2>
-  <div class="collage">
-    <img src="foto1.jpg">
-    <img src="foto2.jpg">
-    <img src="foto3.jpg">
-    <img src="foto4.jpg">
-    <img src="foto5.jpg">
-    <img src="foto6.jpg">
-  </div>
+  <section id="contador">
+    <h2>📅 Nuestro tiempo juntos</h2>
+    <div id="contadorDias"></div>
+  </section>
 
-  <!-- Carta -->
-  <h2>Mi Cartita 💌</h2>
-  <div id="carta"></div>
+  <section id="collage">
+    <h2>📸 Nuestros Momentos</h2>
+    <div class="collage">
+      <img src="foto1.jpg">
+      <img src="foto2.jpg">
+      <img src="foto3.jpg">
+      <img src="foto4.jpg">
+      <img src="foto5.jpg">
+      <img src="foto6.jpg">
+    </div>
+  </section>
 
-  <!-- Juego -->
-  <div id="juego">
+  <section id="carta">
+    <h2>💌 Mi Cartita</h2>
+    <div id="textoCarta"></div>
+  </section>
+
+  <section id="juego">
+    <h2>🎮 Preguntita</h2>
     <p>¿Quieres ser mi novio siempre? 😍</p>
     <div id="botones">
       <button onclick="aceptar()">Sí 💖</button>
       <button id="noBtn" onmouseover="moverBoton()">No 😢</button>
     </div>
     <p id="respuesta"></p>
-  </div>
+  </section>
 
-  <!-- Corazones animados -->
   <script>
+    // Función para mostrar secciones
+    function mostrar(id) {
+      document.querySelectorAll("section").forEach(sec => {
+        sec.classList.remove("active");
+      });
+      document.getElementById(id).classList.add("active");
+    }
+
+    // Corazones animados
     function crearCorazon() {
       const corazon = document.createElement("div");
       corazon.classList.add("corazon");
@@ -129,22 +179,25 @@
       document.body.appendChild(corazon);
       setTimeout(() => { corazon.remove(); }, 5000);
     }
-    setInterval(crearCorazon, 500);
+    setInterval(crearCorazon, 800);
 
     // Contador de días
     const fechaInicio = new Date("2025-03-30");
-    const hoy = new Date();
-    const diff = hoy - fechaInicio;
-    const dias = Math.floor(diff / (1000*60*60*24));
-    document.getElementById("contador").innerText =
-      "Llevamos " + dias + " días juntos 💕";
+    function actualizarContador() {
+      const hoy = new Date();
+      const diff = hoy - fechaInicio;
+      const dias = Math.floor(diff / (1000*60*60*24));
+      document.getElementById("contadorDias").innerText =
+        "Llevamos " + dias + " días juntos 💕";
+    }
+    actualizarContador();
 
-    // Carta (animación letra por letra)
+    // Carta animada
     const textoCarta = "Amor, gracias por cada momento que compartimos. Eres mi alegría diaria y la razón por la que sonrío tanto. Me haces muy feliz y quiero que sigamos construyendo juntos muchos recuerdos hermosos. ¡Te amo mucho! 💖";
     let i = 0;
     function escribirCarta() {
       if (i < textoCarta.length) {
-        document.getElementById("carta").innerHTML += textoCarta.charAt(i);
+        document.getElementById("textoCarta").innerHTML += textoCarta.charAt(i);
         i++;
         setTimeout(escribirCarta, 50);
       }
@@ -154,14 +207,5 @@
     // Juego
     function aceptar() {
       document.getElementById("respuesta").innerText =
-        "¡Sabía que dirías que sí! 💕🥰";
-    }
-    function moverBoton() {
-      const btn = document.getElementById("noBtn");
-      btn.style.position = "absolute";
-      btn.style.left = Math.random() * window.innerWidth + "px";
-      btn.style.top = Math.random() * window.innerHeight + "px";
-    }
-  </script>
-</body>
-</html>
+        "¡Sabía que dirías que sí!
+
