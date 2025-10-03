@@ -291,8 +291,22 @@ function movePiece(i) {
     [pieces[i], pieces[emptyIndex]] = [pieces[emptyIndex], pieces[i]];
     emptyIndex = i;
     renderPuzzle();
+
+    // Verifica si el rompecabezas está completo
+    checkPuzzleComplete();
   }
 }
+
+// Nueva función para detectar completado
+function checkPuzzleComplete() {
+  for (let i = 0; i < pieces.length - 1; i++) {
+    if (!pieces[i] || parseInt(pieces[i].dataset.index) !== i) {
+      return; // todavía no está completo
+    }
+  }
+  alert("¡Bien hecho pollo!"); // mensaje cuando se completa
+}
+
 
 function shufflePuzzle() {
   let piecesWithoutEmpty = pieces.filter(p => p !== null);
