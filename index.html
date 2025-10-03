@@ -79,12 +79,12 @@
       justify-content: center;
     }
     .puzzle-piece {
-      width: 100px;
-      height: 100px;
-      background-size: 300px 300px;
-      cursor: pointer;
-    }
-
+  cursor: pointer;
+  border-radius: 6px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+  transition: all 0.2s; /* animación al moverse */
+}
+   
     #options {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -159,16 +159,17 @@
       </div>
     </section>
 
-    <section id="puzzle">
-      <div class="content-box">
-        <h2>Rompecabezas 🧩</h2>
-        <div class="puzzle-grid" id="puzzleGrid"></div>
-        <div style="text-align:center">
-          <button class="reset-btn" onclick="resetPuzzle()">Reiniciar</button>
-          <button class="reset-btn" onclick="shufflePuzzle()">Mezclar</button>
-        </div>
-      </div>
-    </section>
+   <section id="puzzle">
+  <div class="content-box">
+    <h2>Rompecabezas 🧩</h2>
+    <div class="puzzle-grid" id="puzzleGrid"></div>
+    <div style="text-align:center; margin-top:10px;">
+      <button class="reset-btn" onclick="resetPuzzle()">Reiniciar</button>
+      <button class="reset-btn" onclick="shufflePuzzle()">Mezclar</button>
+    </div>
+  </div>
+</section>
+
 
     <section id="card">
       <div class="content-box">
@@ -229,45 +230,63 @@ Att: Quesito <3
 
     // Rompecabezas
     // Rompecabezas
+// Rompecabezas Mejorado
 const grid = document.getElementById("puzzleGrid");
 const size = 3;
+const pieceSize = 100;
 let pieces = [];
-let emptyIndex = size * size - 1; // última posición vacía
+let emptyIndex = size*size-1; 
 
 function initPuzzle() {
   pieces = [];
   grid.innerHTML = "";
 
-  for (let i = 0; i < size * size; i++) {
+  for (let i = 0; i < size*size; i++) {
     if (i === emptyIndex) {
       pieces.push(null);
       let emptyDiv = document.createElement("div");
-      emptyDiv.style.width = "100px";
-      emptyDiv.style.height = "100px";
+      emptyDiv.style.width = pieceSize + "px";
+      emptyDiv.style.height = pieceSize + "px";
       grid.appendChild(emptyDiv);
       continue;
     }
     let div = document.createElement("div");
     div.classList.add("puzzle-piece");
-    let x = (i % size) * -100;
-    let y = Math.floor(i / size) * -100;
+    div.style.width = pieceSize + "px";
+    div.style.height = pieceSize + "px";
+    div.style.transition = "all 0.2s"; // animación
+    let x = (i % size) * -pieceSize;
+    let y = Math.floor(i / size) * -pieceSize;
     div.style.backgroundImage = "url('https://github.com/nattcjj/JUEGO_POLLO/raw/main/puzzle-photo.jpg?raw=true')";
     div.style.backgroundPosition = `${x}px ${y}px`;
-    div.dataset.index = i;
-    div.onclick = () => movePiece(i);
+    div.style.backgroundSize = `${size*pieceSize}px ${size*pieceSize}px`;
     pieces.push(div);
-    grid.appendChild(div);
+  }
+  renderPuzzle();
+}
+
+function renderPuzzle() {
+  grid.innerHTML = "";
+  for (let i = 0; i < pieces.length; i++) {
+    if (pieces[i]) {
+      pieces[i].dataset.index = i;
+      pieces[i].onclick = () => movePiece(i);
+      grid.appendChild(pieces[i]);
+    } else {
+      let emptyDiv = document.createElement("div");
+      emptyDiv.style.width = pieceSize + "px";
+      emptyDiv.style.height = pieceSize + "px";
+      grid.appendChild(emptyDiv);
+    }
   }
 }
 
-// Mueve una pieza si está al lado del espacio vacío
 function movePiece(i) {
   let row = Math.floor(i / size);
   let col = i % size;
   let emptyRow = Math.floor(emptyIndex / size);
   let emptyCol = emptyIndex % size;
 
-  // Verifica si está al lado
   if (Math.abs(row - emptyRow) + Math.abs(col - emptyCol) === 1) {
     [pieces[i], pieces[emptyIndex]] = [pieces[emptyIndex], pieces[i]];
     emptyIndex = i;
@@ -275,45 +294,24 @@ function movePiece(i) {
   }
 }
 
-// Redibuja el tablero
-function renderPuzzle() {
-  grid.innerHTML = "";
-  for (let i = 0; i < size * size; i++) {
-    if (pieces[i]) {
-      grid.appendChild(pieces[i]);
-    } else {
-      let emptyDiv = document.createElement("div");
-      emptyDiv.style.width = "100px";
-      emptyDiv.style.height = "100px";
-      grid.appendChild(emptyDiv);
-    }
-  }
-}
-
-// Mezclar piezas
 function shufflePuzzle() {
-  // Extraer las piezas sin el vacío
   let piecesWithoutEmpty = pieces.filter(p => p !== null);
-
-  // Mezclar solo las piezas
   for (let i = piecesWithoutEmpty.length - 1; i > 0; i--) {
     let j = Math.floor(Math.random() * (i + 1));
     [piecesWithoutEmpty[i], piecesWithoutEmpty[j]] = [piecesWithoutEmpty[j], piecesWithoutEmpty[i]];
   }
-
-  // Volver a agregar el espacio vacío al final
   pieces = [...piecesWithoutEmpty, null];
   emptyIndex = pieces.length - 1;
   renderPuzzle();
 }
 
-// Reiniciar
 function resetPuzzle() {
-  emptyIndex = size * size - 1;
+  emptyIndex = size*size-1;
   initPuzzle();
 }
 
 initPuzzle();
+
 
     // Trivia
     const questions = [
