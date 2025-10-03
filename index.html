@@ -40,4 +40,46 @@
       animation: caer 5s linear infinite;
     }
     @keyframes caer {
-      0% { tra
+      0% { transform: translateY(-10vh); opacity: 1; }
+      100% { transform: translateY(100vh); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <h1>¿Quieres estar conmigo para siempre? 💞</h1>
+  <button id="si">¡Sí! 💖</button>
+  <button id="no">No 😈</button>
+
+  <script>
+    const btnNo = document.getElementById("no");
+    const btnSi = document.getElementById("si");
+
+    // Acción cuando dice Sí
+    btnSi.addEventListener("click", () => {
+      document.body.innerHTML = "<h1 style='color:#d63384; font-size:3em;'>¡Sabía que dirías que SÍ! 😍💘</h1>";
+    });
+
+    // El botón No huye
+    btnNo.addEventListener("mouseover", () => {
+      const x = Math.floor(Math.random() * (window.innerWidth - 100));
+      const y = Math.floor(Math.random() * (window.innerHeight - 50));
+      btnNo.style.left = x + "px";
+      btnNo.style.top = y + "px";
+    });
+
+    // Corazones cayendo
+    function crearCorazon() {
+      const corazon = document.createElement("div");
+      corazon.classList.add("corazon");
+      corazon.innerHTML = "💖";
+      corazon.style.left = Math.random() * 100 + "vw";
+      corazon.style.animationDuration = (Math.random() * 3 + 2) + "s";
+      document.body.appendChild(corazon);
+      setTimeout(() => {
+        corazon.remove();
+      }, 5000);
+    }
+    setInterval(crearCorazon, 500);
+  </script>
+</body>
+</html>
