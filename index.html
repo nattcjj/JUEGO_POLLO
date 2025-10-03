@@ -102,7 +102,7 @@
       <h2>Nuestra canción ❤</h2>
       <p style="text-align:center">
         Dale clic para escuchar nuestra canción favorita:<br>
-        <a href="https://www.youtube.com/" target="_blank">Haz clic aquí</a>
+        <a href="https://youtu.be/PQlG1gznMBE?si=30PFaUKp2jIHyCBf">Haz clic aquí</a>
       </p>
     </section>
 
@@ -119,7 +119,7 @@
 
     <section id="puzzle">
       <h2>Rompecabezas ❤</h2>
-      <p style="text-align:center">Se formará una foto especial, complétala 💖</p>
+      <p style="text-align:center">Complétala 💖</p>
       <div class="puzzle-grid" id="puzzleGrid"></div>
       <div style="text-align:center;">
         <button onclick="shufflePuzzle()">Mezclar</button>
@@ -132,9 +132,17 @@
       <h2>Carta ❤</h2>
       <div class="card">
         <textarea id="cardText" style="width:100%; height:200px;">
-Mi chocolatito, 
-Hoy quiero decirte lo especial que eres para mí. 
-Nuestra relación es única, porque contigo siento una conexión que nunca antes había vivido.
+Hoy quiero decirte lo especial que eres para mí. Nuestra relación es única, porque contigo siento una conexión que nunca antes había vivido. Es como si nuestras almas se hubieran encontrado en el momento perfecto para enseñarnos lo que significa amar de verdad.
+
+Contigo cada instante se vuelve mágico, incluso las cosas más simples son hermosas si las comparto a tu lado. Me haces sentir tranquila, feliz y afortunada de tener un amor tan auténtico, tan nuestro.
+
+Gracias por ser mi compañero, mi confidente, mi alegría diaria. No hay nada en este mundo que cambie lo que somos, porque lo que tenemos es diferente, especial y eterno.
+
+Eres mi chocolatito y siempre tendrás en mí a tu quesito, que te ama con todo el corazón.
+
+Con amor,
+Att: Tu quesito
+
         </textarea>
         <div style="margin-top:10px; text-align:center;">
           <button onclick="downloadCard()">Guardar texto (descargar)</button>
@@ -227,8 +235,12 @@ Nuestra relación es única, porque contigo siento una conexión que nunca antes
 
     // 🔹 Trivia
     const questions = [
-      {q:"¿Dónde fue nuestra primer encuentro?", options:["En mi U","En el portal 80","En un café","En el cloplaza"], correct:0},
+      {q:"¿Dónde fue nuestro primer encuentro?", options:["En mi U","En el portal 80","En un café","En el cloplaza"], correct:1},
       {q:"¿Cuál es mi color favorito?", options:["Azul","Rojo","Verde"], correct:1},
+      { q: "¿Cuando fue nuestro primer beso?", opts: ["13 de mayo", "20 de mayo", "18 de mayo", "3 de junio"], correct: 0 },
+      { q: "¿Qué es lo que más me gusta de tí?", opts: ["Tu boca", "Tus ojos", "Tus manos", "Tu olor"], correct: 1 },
+      { q: "¿Qué nos  gusta comer?", opts: ["Sushi", "Lasagna", "Hamburguesa", "Salchipapa"], correct: 3 },
+
     ];
     let current=0, score=0;
     function loadQuestion(){
