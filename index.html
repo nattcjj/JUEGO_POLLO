@@ -129,7 +129,7 @@
       <div class="content-box">
         <h2>Nuestra canción ❤</h2>
         <p style="text-align:center">
-          Dale clic para escuchar nuestra canción favorita:<br>
+          Dale clic para escuchar nuestra canción:<br>
           <a href="https://youtu.be/PQlG1gznMBE?si=30PFaUKp2jIHyCBf" target="_blank">Haz clic aquí</a>
         </p>
       </div>
@@ -176,7 +176,7 @@ Att: Quesito <3
 
     <section id="trivia">
       <div class="content-box trivia">
-        <h2>Trivia del amor ❓</h2>
+        <h2>Trivia❓</h2>
         <p id="question"></p>
         <div id="options"></div>
         <div style="text-align:center; margin-top:15px;">
@@ -194,7 +194,7 @@ Att: Quesito <3
     }
 
     // Contador
-    const startDate = new Date("2025-03-27T00:00:00");
+    const startDate = new Date("2025-03-30T00:00:00");
     function updateCounter() {
       const now = new Date();
       let diff = now - startDate;
@@ -231,7 +231,7 @@ Att: Quesito <3
         div.classList.add("puzzle-piece");
         let x = (i % size) * -100;
         let y = Math.floor(i / size) * -100;
-        div.style.backgroundImage = "url('https://github.com/nattcjj/JUEGO_POLLO/raw/main/puzzle.jpg')";
+        div.style.backgroundImage = "url('https://github.com/nattcjj/JUEGO_POLLO/raw/main/puzzle-photo.jpg?raw=true')";
         div.style.backgroundPosition = `${x}px ${y}px`;
         div.dataset.index = i;
         div.onclick = () => movePiece(i);
