@@ -292,12 +292,18 @@ function renderPuzzle() {
 
 // Mezclar piezas
 function shufflePuzzle() {
-  for (let i = pieces.length - 1; i > 0; i--) {
+  // Extraer las piezas sin el vacío
+  let piecesWithoutEmpty = pieces.filter(p => p !== null);
+
+  // Mezclar solo las piezas
+  for (let i = piecesWithoutEmpty.length - 1; i > 0; i--) {
     let j = Math.floor(Math.random() * (i + 1));
-    [pieces[i], pieces[j]] = [pieces[j], pieces[i]];
+    [piecesWithoutEmpty[i], piecesWithoutEmpty[j]] = [piecesWithoutEmpty[j], piecesWithoutEmpty[i]];
   }
-  // Recalcular dónde está el vacío
-  emptyIndex = pieces.indexOf(null);
+
+  // Volver a agregar el espacio vacío al final
+  pieces = [...piecesWithoutEmpty, null];
+  emptyIndex = pieces.length - 1;
   renderPuzzle();
 }
 
