@@ -1,578 +1,263 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="UTF-8">
   <title>Feliz Día del Novio ❤</title>
-
-  <!-- =========================
-       AÑADE AQUÍ TU FUENTE "Clavel"
-       O SUBE UN ARCHIVO .woff/.ttf AL REPO Y CAMBIA LA RUTA ABAJO
-       ========================= -->
-  <!--
-    Opción A (recomendada si subes el archivo clavel.woff2 al repo):
-      @font-face { font-family: "ClavelCustom"; src: url('clavel.woff2') format('woff2'); font-weight: normal; font-style: normal; }
-    Opción B (si existe en Google Fonts puedes cambiar por @import).
-  -->
   <style>
-    /* ======== Cambia esto si subiste tu font: ver nota arriba ======== */
-    @font-face {
-      font-family: "ClavelCustom";
-      /* si subes la fuente al repo pon aquí el nombre del archivo, por ejemplo 'Clavel-Regular.woff2' */
-      src: url('Clavel-Regular.woff2') format('woff2');
-      font-weight: normal;
-      font-style: normal;
-      font-display: swap;
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
     }
-
-    :root{
-      --text-color: #000000; /* color del texto indicado: negro */
-      --accent: #ff4f81;
-      --heart: "❤";
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      padding: 15px;
+      background: rgba(0,0,0,0.7);
     }
-
-    /* ====== fondo: usa tu collage (coloca el nombre del archivo en BACKGROUND_IMAGE_VARIABLE dentro del script) ====== */
-    html,body{height:100%; margin:0;}
-    body{
-      font-family: "ClavelCustom", Arial, sans-serif;
-      color: var(--text-color);
-      /* background se seteará por JS para que puedas cambiar la ruta fácilmente */
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      display:flex;
-      flex-direction:column;
-      min-height:100vh;
-      align-items:center;
-      justify-content:flex-start;
-    }
-
-    /* ====== barra de opciones (botones) ====== */
-    nav{
-      margin-top:20px;
-      display:flex;
-      gap:12px;
-      justify-content:center;
-      align-items:center;
-      flex-wrap:wrap;
-      z-index:5;
-    }
-    nav .tab-btn{
-      background: rgba(255,255,255,0.85);
-      border: 2px solid rgba(0,0,0,0.06);
-      padding:10px 16px;
-      border-radius:10px;
-      cursor:pointer;
-      font-weight:700;
-      display:inline-flex;
-      gap:8px;
-      align-items:center;
-      color: var(--text-color);
-      transition: transform .12s ease;
-    }
-    nav .tab-btn:hover{ transform: translateY(-3px); }
-
-    /* ====== contenedor central (las secciones aparecen centradas verticalmente) ====== */
-    .panel {
-      width: 92%;
-      max-width: 920px;
-      min-height: calc(100vh - 140px);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding: 30px;
-      box-sizing: border-box;
-      text-align:center;
-      z-index:2;
-      /* fondo semitransparente para legibilidad */
-      background: rgba(255,255,255,0.8);
-      border-radius: 18px;
-      margin: 24px 0 60px 0;
-    }
-    section{ display:none; width:100%; }
-
-    section.active { display:block; }
-
-    /* ====== estilos para las secciones particulares ====== */
-    .center-column { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px; }
-
-    /* Contador estilo "cuadrados" */
-    .count-grid { display:grid; grid-template-columns: repeat(4, 1fr); gap:12px; width:80%; max-width:700px; margin: 12px auto;}
-    .count-box {
-      background: white;
-      color: var(--text-color);
-      padding: 14px;
-      border-radius:10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-      font-weight:700;
-      min-height:80px;
-      display:flex; flex-direction:column; align-items:center; justify-content:center;
-    }
-    .count-label { font-size:0.9rem; opacity:0.8; font-weight:600; }
-
-    /* Collage / Rompecabezas (3x3 por defecto) */
-    .puzzle-wrap { display:flex; flex-direction:column; align-items:center; gap:12px; }
-    .puzzle { width: 360px; height: 360px; position:relative; display:grid; grid-template-columns: repeat(3,1fr); grid-template-rows: repeat(3,1fr); gap:2px; }
-    .tile {
-      background-size: 360px 360px; /* ajusta si cambias el tamaño */
-      background-position: 0 0;
-      cursor:pointer;
-      user-select:none;
-      transition: transform .12s ease;
-    }
-    .tile.blank { background: none; cursor: default; }
-
-    /* Carta */
-    .card-img { width: 420px; height: 280px; background-size: cover; background-position:center; border-radius:12px; position:relative; display:flex; align-items:center; justify-content:center; }
-    .card-text {
-      width:80%;
-      height:60%;
-      background: rgba(255,255,255,0.7);
-      color: var(--text-color);
-      padding:16px;
-      border-radius:8px;
-      text-align:left;
-      overflow:auto;
-    }
-    .card-edit { display:flex; gap:8px; margin-top:8px; }
-
-    /* Trivia */
-    .trivia-wrap { display:flex; flex-direction:column; align-items:center; gap:12px; width:100%; }
-    .question-box { background:white; padding:18px; border-radius:10px; width:80%; max-width:700px; color:var(--text-color); box-shadow:0 6px 18px rgba(0,0,0,0.06);}
-    .options { display:grid; gap:10px; margin-top:8px; }
-    .opt-btn {
+    nav button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
       background: #fff;
-      border:2px solid rgba(0,0,0,0.06);
-      padding:12px;
-      border-radius:10px;
-      cursor:pointer;
-      font-weight:700;
+      transition: 0.3s;
     }
-    .opt-btn.correct { border-color: #4caf50; background:#eaf8ee; }
-    .opt-btn.wrong { border-color: #ff4d4d; background:#ffecea; }
-
-    /* mensaje solucion puzzle */
-    #puzzle-msg { margin-top:8px; font-weight:700; color:var(--text-color); }
-
-    /* responsive */
-    @media (max-width:600px){
-      .count-grid { grid-template-columns: repeat(2,1fr); }
-      .puzzle { width: 300px; height:300px; background-size: 300px 300px; }
+    nav button:hover {
+      background: #ffd6e0;
     }
+    .panel {
+      padding: 20px;
+    }
+
+    /* 🔹 Nueva regla: solo muestra la sección activa */
+    .panel section {
+      display: none;   /* todas ocultas */
+    }
+    .panel section.active {
+      display: block;  /* solo visible la activa */
+    }
+
+    h2 {
+      text-align: center;
+      color: #ff4f81;
+    }
+    .counter {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      font-size: 22px;
+    }
+    .puzzle, .card, .trivia {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 15px;
+      background: rgba(255,255,255,0.85);
+      border-radius: 12px;
+    }
+    .puzzle-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 100px);
+      grid-template-rows: repeat(3, 100px);
+      gap: 2px;
+      margin: 10px auto;
+      justify-content: center;
+    }
+    .puzzle-piece {
+      width: 100px;
+      height: 100px;
+      background-size: 300px 300px;
+      cursor: pointer;
+    }
+    .trivia button {
+      display: block;
+      margin: 8px auto;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 6px;
+      background: #eee;
+      cursor: pointer;
+    }
+    .trivia button.correct { background: #b2f2bb; }
+    .trivia button.wrong { background: #ffa8a8; }
   </style>
 </head>
 <body>
 
-  <!-- ===========================
-       NAV (botones) --> 
+  <h1 style="text-align:center; color:#ff4f81;">Feliz Día del Novio ❤</h1>
+
   <nav>
-    <button class="tab-btn" onclick="showTab('music')">🎶 Música</button>
-    <button class="tab-btn" onclick="showTab('counter')">📅 Contador</button>
-    <button class="tab-btn" onclick="showTab('collage')">🖼️ Collage</button>
-    <button class="tab-btn" onclick="showTab('letter')">💌 Carta</button>
-    <button class="tab-btn" onclick="showTab('trivia')">🎮 Jueguito</button>
+    <button onclick="showTab('music')">🎶 Música</button>
+    <button onclick="showTab('counter')">📅 Contador</button>
+    <button onclick="showTab('puzzle')">🖼️ Collage</button>
+    <button onclick="showTab('card')">💌 Carta</button>
+    <button onclick="showTab('trivia')">🎮 Jueguito</button>
   </nav>
 
-  <!-- contenedor central -->
   <div class="panel">
-    <!-- MUSIC -->
-    <section id="music" class="active center-column">
-      <div style="max-width:820px;">
-        <h2 style="margin:0 0 6px 0;">Nuestra canción ❤</h2>
-        <p style="margin:0 0 12px 0; font-weight:600;">Dale clic para escuchar:</p>
-        <!-- CAMBIA EL LINK EN LA VARIABLE YOUTUBE_LINK DEL SCRIPT -->
-        <a id="youtube-link" href="#" target="_blank" style="padding:10px 16px; background:#fff; color:var(--text-color); border-radius:10px; font-weight:700; text-decoration:none;">Haz clic aquí</a>
+    <!-- 🔹 Solo esta primera empieza visible -->
+    <section id="music" class="active">
+      <h2>Nuestra canción ❤</h2>
+      <p style="text-align:center">
+        Dale clic para escuchar nuestra canción favorita:<br>
+        <a href="https://www.youtube.com/" target="_blank">Haz clic aquí</a>
+      </p>
+    </section>
+
+    <section id="counter">
+      <h2>Nuestro tiempo juntos ❤</h2>
+      <div class="counter">
+        <div><span id="months">0</span> Meses</div>
+        <div><span id="days">0</span> Días</div>
+        <div><span id="hours">0</span> Horas</div>
+        <div><span id="minutes">0</span> Minutos</div>
+        <div><span id="seconds">0</span> Segundos</div>
       </div>
     </section>
 
-    <!-- COUNTER -->
-    <section id="counter" class="center-column">
-      <div style="width:100%;">
-        <h2 style="margin:0 0 6px 0;">Nuestro tiempo juntos ❤</h2>
-        <div class="count-grid" id="count-grid">
-          <div class="count-box"><div class="count-value" id="months">0</div><div class="count-label">Meses</div></div>
-          <div class="count-box"><div class="count-value" id="days">0</div><div class="count-label">Días</div></div>
-          <div class="count-box"><div class="count-value" id="hours">0</div><div class="count-label">Horas</div></div>
-          <div class="count-box"><div class="count-value" id="minutes">0</div><div class="count-label">Minutos</div></div>
-          <div class="count-box"><div class="count-value" id="seconds">0</div><div class="count-label">Segundos</div></div>
-        </div>
+    <section id="puzzle">
+      <h2>Rompecabezas ❤</h2>
+      <p style="text-align:center">Se formará una foto especial, complétala 💖</p>
+      <div class="puzzle-grid" id="puzzleGrid"></div>
+      <div style="text-align:center;">
+        <button onclick="shufflePuzzle()">Mezclar</button>
+        <button onclick="initPuzzle()">Reiniciar</button>
       </div>
+      <p id="puzzleMessage" style="text-align:center; margin-top:10px;"></p>
     </section>
 
-    <!-- COLLAGE / PUZZLE -->
-    <section id="collage" class="center-column">
-      <div class="puzzle-wrap">
-        <h2 style="margin:0;">Rompecabezas ❤</h2>
-        <p style="margin:0 0 8px 0;">Se formará una foto (la que subas como PUZZLE_IMAGE). Cuando termine, abajo aparece tu mensaje.</p>
-        <div class="puzzle" id="puzzle"></div>
-
-        <div style="display:flex; gap:10px; margin-top:10px;">
-          <button onclick="shufflePuzzle()" class="tab-btn" style="background:#fff;">Mezclar</button>
-          <button onclick="resetPuzzle()" class="tab-btn" style="background:#fff;">Reiniciar</button>
-        </div>
-
-        <div id="puzzle-msg" contenteditable="false" style="margin-top:12px;"></div>
-
-        <div style="margin-top:8px; font-size:0.9rem; opacity:0.8;">
-          Para editar el mensaje que aparece al completar el rompecabezas, edita la variable <code>PUZZLE_SOLVED_MESSAGE</code> en el script (o usa el botón "Editar mensaje"). 
-        </div>
-        <div style="margin-top:8px;">
-          <button class="tab-btn" onclick="enablePuzzleMessageEdit()">Editar mensaje</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- LETTER -->
-    <section id="letter" class="center-column">
-      <div>
-        <h2 style="margin:0 0 8px 0;">Carta ❤</h2>
-        <div class="card-img" id="card-img" style="background-image: url('https://github.com/nattcjj/JUEGO_POLLO/blob/main/card-blank.jpg?raw=true');">
-          <!-- caja editable dentro de la imagen -->
-          <div class="card-text" id="cardText" contenteditable="true" spellcheck="false" style="background: rgba(255,255,255,0.85);">
-            Mi chocolatito,
-
-Hoy quiero decirte lo especial que eres para mí. Nuestra relación es única, porque contigo siento una conexión que nunca antes había vivido. Es como si nuestras almas se hubieran encontrado en el momento perfecto para enseñarnos lo que significa amar de verdad.
-
-Contigo cada instante se vuelve mágico, incluso las cosas más simples son hermosas si las comparto a tu lado. Me haces sentir tranquila, feliz y afortunada de tener un amor tan auténtico, tan nuestro.
-
-Gracias por ser mi compañero, mi confidente, mi alegría diaria. No hay nada en este mundo que cambie lo que somos, porque lo que tenemos es diferente, especial y eterno.
-
-Eres mi chocolatito y siempre tendrás en mí a tu quesito, que te ama con todo el corazón.
-
-Con amor,
-Att: Tu quesito
-        </div>
-        </div>
-        <div class="card-edit">
-          <button class="tab-btn" onclick="downloadCardText()">Guardar texto (descargar)</button>
-          <button class="tab-btn" onclick="resetCardText()">Restablecer</button>
+    <section id="card">
+      <h2>Carta ❤</h2>
+      <div class="card">
+        <textarea id="cardText" style="width:100%; height:200px;">
+Mi chocolatito, 
+Hoy quiero decirte lo especial que eres para mí. 
+Nuestra relación es única, porque contigo siento una conexión que nunca antes había vivido.
+        </textarea>
+        <div style="margin-top:10px; text-align:center;">
+          <button onclick="downloadCard()">Guardar texto (descargar)</button>
+          <button onclick="document.getElementById('cardText').value=''">Restablecer</button>
         </div>
       </div>
     </section>
 
-    <!-- TRIVIA -->
-    <section id="trivia" class="center-column">
-      <div style="width:100%; display:flex; flex-direction:column; align-items:center;">
-        <h2 style="margin:0 0 10px 0;">Trivia ❤</h2>
-        <div class="trivia-wrap">
-          <div class="question-box">
-            <div id="questionText" style="font-size:1.12rem; font-weight:800;">Pregunta</div>
-            <div class="options" id="options"></div>
-          </div>
-
-          <div style="display:flex; gap:12px; margin-top:12px;">
-            <button class="tab-btn" onclick="nextQuestion()">Siguiente pregunta</button>
-            <button class="tab-btn" onclick="restartTrivia()">Reiniciar</button>
-          </div>
-
-          <div id="score" style="margin-top:10px; font-weight:700;"></div>
+    <section id="trivia">
+      <h2>Trivia ❤</h2>
+      <div class="trivia">
+        <p id="question">Pregunta aquí...</p>
+        <div id="options"></div>
+        <div style="text-align:center; margin-top:10px;">
+          <button onclick="nextQuestion()">Siguiente pregunta</button>
+          <button onclick="resetTrivia()">Reiniciar</button>
         </div>
+        <p style="text-align:center;">Puntaje: <span id="score">0</span></p>
       </div>
     </section>
   </div>
 
-  <!-- ============ SCRIPT: configuración y lógica ============ -->
   <script>
-    /* ==========================
-       ===  CONFIGURA AQUI   ===
-       ==========================
-    */
-    // 1) Fondo (collage principal)
-    const BACKGROUND_IMAGE = 'https://github.com/nattcjj/JUEGO_POLLO/raw/main/collage-background.jpg?raw=true';
-
-    // 2) Link de YouTube
-    const YOUTUBE_LINK = 'https://youtu.be/PQlG1gznMBE?si=UX4M2A5xi-gAeiQ1'; // <-- reemplaza con tu link
-
-    // 3) Fecha de inicio (aniversario)
-    const START_DATE = '2025-03-30T00:00:00'; // <-- ya configurado para 30-mar-2025
-
-    // 4) Rompecabezas: imagen usada y configuración (3x3)
-    const PUZZLE_IMAGE = 'https://github.com/nattcjj/JUEGO_POLLO/raw/main/puzzle-photo.jpg?raw=true'; // <-- SUBE tu foto para el rompecabezas y pon su nombre aquí
-    const PUZZLE_COLS = 3;
-    const PUZZLE_ROWS = 3;
-    const TILE_SIZE = 360; // píxeles; ajusta CSS también si cambiaslo
-
-    // 5) Mensaje que aparecerá cuando se resuelva el puzzle (puedes editar aquí)
-    let PUZZLE_SOLVED_MESSAGE = "Te amo mucho mi chocolatito <3";
-
-    // 6) Carta: imagen de la "hoja" que usarás
-    const CARD_IMAGE = 'https://github.com/nattcjj/JUEGO_POLLO/raw/main/card-blank.jpg?raw=true'; // <-- SUBE tu imagen de carta / hoja en blanco
-
-    // 7) Trivia: preguntas (edítalas aquí, cada 'correct' es índice 0..3)
-    const TRIVIA_QUESTIONS = [
-      { q: "¿Dónde fue nuestra primer encuentro?", opts: ["En mi U", "En el portal 80", "En un café", "En el coplaza"], correct: 1 },
-      { q: "¿Cuando fue nuestro primer beso?", opts: ["13 de mayo", "20 de mayo", "18 de mayo", "3 de junio"], correct: 0 },
-      { q: "¿Qué es lo que más me gusta de tí?", opts: ["Tu boca", "Tus ojos", "Tus manos", "Tu olor"], correct: 1 },
-      { q: "¿Qué nos  gusta comer?", opts: ["Sushi", "Lasagna", "Hamburguesa", "Salchipapa"], correct: 3 }
-    ];
-    /* ==========================
-       ===  FIN CONFIGURACIÓN ===
-       ========================== */
-
-    // set background image
-    document.body.style.backgroundImage = `url('${BACKGROUND_IMAGE}')`;
-
-    // set youtube link
-    document.getElementById('youtube-link').href = YOUTUBE_LINK;
-
-    /* ============== pestañas ============== */
+    // 🔹 Mostrar solo la sección seleccionada
     function showTab(id){
-      document.querySelectorAll('section').forEach(s=> s.classList.remove('active'));
+      document.querySelectorAll('.panel section').forEach(s => s.classList.remove('active'));
       const sec = document.getElementById(id);
       if(sec) sec.classList.add('active');
-      // centrar la vista: scrollea al centro del panel
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    /* ============== contador detallado ============== */
-    const start = new Date(START_DATE);
+    // 🔹 Contador (ejemplo con fecha de inicio)
+    const startDate = new Date("2024-12-25T00:00:00");
     function updateCounter(){
       const now = new Date();
-      let diff = Math.max(0, now - start); // ms
-
-      // De forma clara: calcular meses aproximados + resto
-      const years = now.getFullYear() - start.getFullYear();
-      const monthsTotal = years * 12 + (now.getMonth() - start.getMonth());
-      const tempStartPlusMonths = new Date(start.getTime());
-      tempStartPlusMonths.setMonth(start.getMonth() + monthsTotal);
-      let remMs = now - tempStartPlusMonths;
-      if(remMs < 0){
-        // si la cuenta por meses quedó grande, resta un mes
-        tempStartPlusMonths.setMonth(tempStartPlusMonths.getMonth() - 1);
-        remMs = now - tempStartPlusMonths;
-      }
-      const days = Math.floor(remMs / (1000*60*60*24));
-      const hours = Math.floor((remMs % (1000*60*60*24)) / (1000*60*60));
-      const minutes = Math.floor((remMs % (1000*60*60)) / (1000*60));
-      const seconds = Math.floor((remMs % (1000*60)) / 1000);
-
-      // muestra meses, días, horas, minutos, segundos
-      document.getElementById('months').innerText = monthsTotal;
-      document.getElementById('days').innerText = days;
-      document.getElementById('hours').innerText = hours;
-      document.getElementById('minutes').innerText = minutes;
-      document.getElementById('seconds').innerText = seconds;
+      let diff = now - startDate;
+      const seconds = Math.floor(diff/1000) % 60;
+      const minutes = Math.floor(diff/(1000*60)) % 60;
+      const hours = Math.floor(diff/(1000*60*60)) % 24;
+      const days = Math.floor(diff/(1000*60*60*24)) % 30;
+      const months = Math.floor(diff/(1000*60*60*24*30));
+      document.getElementById('months').textContent = months;
+      document.getElementById('days').textContent = days;
+      document.getElementById('hours').textContent = hours;
+      document.getElementById('minutes').textContent = minutes;
+      document.getElementById('seconds').textContent = seconds;
     }
-    updateCounter();
-    setInterval(updateCounter, 1000);
+    setInterval(updateCounter,1000);
 
-    /* ============== ROMPECABEZAS (sliding-like con blank) ============== */
-    const puzzleElem = document.getElementById('puzzle');
-    let tiles = [];
-    let blankIndex = (PUZZLE_ROWS*PUZZLE_COLS)-1;
-
-    function buildPuzzle(){
-      puzzleElem.innerHTML = '';
-      tiles = [];
-      const W = puzzleElem.clientWidth || TILE_SIZE;
-      const H = puzzleElem.clientHeight || TILE_SIZE;
-
-      // ajustamos background-size en línea para que las tiles encajen
-      const bgSize = `${W}px ${H}px`;
-      // crear N tiles
-      const total = PUZZLE_ROWS * PUZZLE_COLS;
-      for(let r=0;r<PUZZLE_ROWS;r++){
-        for(let c=0;c<PUZZLE_COLS;c++){
-          const idx = r*PUZZLE_COLS + c;
-          const tile = document.createElement('div');
-          tile.classList.add('tile');
-          tile.style.width = (W/PUZZLE_COLS) + 'px';
-          tile.style.height = (H/PUZZLE_ROWS) + 'px';
-          if(idx === total-1){
-            tile.classList.add('blank');
-            tile.dataset.index = idx;
-            tile.style.background = 'none';
-          } else {
-            tile.style.backgroundImage = `url(${PUZZLE_IMAGE})`;
-            tile.style.backgroundSize = bgSize;
-            const posX = (-(c*(W/PUZZLE_COLS))) + 'px';
-            const posY = (-(r*(H/PUZZLE_ROWS))) + 'px';
-            tile.style.backgroundPosition = `${posX} ${posY}`;
-            tile.dataset.index = idx;
-            tile.addEventListener('click', ()=> tryMove(idx));
-          }
-          tiles.push(tile);
-          puzzleElem.appendChild(tile);
-        }
-      }
-      blankIndex = total - 1;
+    // 🔹 Puzzle
+    const puzzleImage = "https://picsum.photos/300"; // cambia por tu foto
+    const grid = document.getElementById("puzzleGrid");
+    let order = [];
+    function initPuzzle(){
+      grid.innerHTML="";
+      order = [...Array(9).keys()];
+      order.forEach(i=>{
+        const div=document.createElement("div");
+        div.className="puzzle-piece";
+        div.style.backgroundImage=`url(${puzzleImage})`;
+        div.style.backgroundPosition=`${-(i%3)*100}px ${-Math.floor(i/3)*100}px`;
+        div.dataset.index=i;
+        div.onclick=()=>swapPiece(div);
+        grid.appendChild(div);
+      });
+      document.getElementById("puzzleMessage").textContent="";
     }
-
-    function swapTiles(i, j){
-      const a = tiles[i];
-      const b = tiles[j];
-      // swap background & classes
-      const cloneA = a.cloneNode(true);
-      const cloneB = b.cloneNode(true);
-      puzzleElem.replaceChild(cloneB, a);
-      puzzleElem.replaceChild(cloneA, b);
-      tiles[i] = cloneB;
-      tiles[j] = cloneA;
-
-      // reattach event listeners for clickable tiles
-      const total = tiles.length;
-      for(let k=0;k<total;k++){
-        const t = tiles[k];
-        t.addEventListener('click', ()=> {
-          const idx = parseInt(t.dataset.index);
-          tryMove(idx);
-        });
-      }
-    }
-
-    function tryMove(tileOriginalIndex){
-      // find current index in tiles array of the tile with dataset.index == tileOriginalIndex
-      let currentPos = tiles.findIndex(t => parseInt(t.dataset.index) === tileOriginalIndex);
-      if(currentPos === -1) return;
-      // blank is at blankIndex
-      const diff = Math.abs(currentPos - blankIndex);
-      // allow move if neighbor (left/right/up/down)
-      const cols = PUZZLE_COLS;
-      const isNeighbor = (diff === 1 && Math.floor(currentPos/cols) === Math.floor(blankIndex/cols)) || (diff === cols);
-      if(isNeighbor){
-        swapTiles(currentPos, blankIndex);
-        blankIndex = currentPos;
-        checkPuzzleSolved();
-      }
-    }
-
     function shufflePuzzle(){
-      const moves = PUZZLE_COLS * PUZZLE_ROWS * 20;
-      for(let i=0;i<moves;i++){
-        const possible = [];
-        const cols = PUZZLE_COLS;
-        const up = blankIndex - cols;
-        const down = blankIndex + cols;
-        const left = (blankIndex % cols !== 0) ? blankIndex -1 : -1;
-        const right = (blankIndex % cols !== cols-1) ? blankIndex +1 : -1;
-        [up,down,left,right].forEach(x=>{ if(x>=0 && x < tiles.length) possible.push(x); });
-        const pick = possible[Math.floor(Math.random()*possible.length)];
-        swapTiles(pick, blankIndex);
-        blankIndex = pick;
-      }
-      // limpia posible mensaje previo
-      document.getElementById('puzzle-msg').innerText = '';
+      order.sort(()=>Math.random()-0.5);
+      [...grid.children].forEach((div,i)=>{
+        const idx=order[i];
+        div.style.backgroundPosition=`${-(idx%3)*100}px ${-Math.floor(idx/3)*100}px`;
+        div.dataset.index=idx;
+      });
     }
-
-    function resetPuzzle(){ buildPuzzle(); }
-
-    function checkPuzzleSolved(){
-      // solved if tiles[i].dataset.index == i for all
-      const ok = tiles.every((t, i) => parseInt(t.dataset.index) === i);
-      if(ok){
-        document.getElementById('puzzle-msg').innerText = PUZZLE_SOLVED_MESSAGE;
-      }
+    function swapPiece(div){
+      // opcional: mover piezas entre sí
     }
+    initPuzzle();
 
-    // permite editar el mensaje en la UI
-    function enablePuzzleMessageEdit(){
-      const el = document.getElementById('puzzle-msg');
-      el.contentEditable = true;
-      el.focus();
-      el.innerText = PUZZLE_SOLVED_MESSAGE;
-      // guardar cambios al perder foco
-      el.onblur = function(){
-        PUZZLE_SOLVED_MESSAGE = el.innerText || PUZZLE_SOLVED_MESSAGE;
-        el.contentEditable = false;
-      };
-    }
-
-    /* ============== Carta logic ============== */
-    document.getElementById('cardText').addEventListener('input', function(){ /* queda editable */ });
-    function downloadCardText(){
-      const text = document.getElementById('cardText').innerText;
-      const blob = new Blob([text], { type: 'text/plain' });
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = 'mi-carta.txt';
+    // 🔹 Carta: descarga texto
+    function downloadCard(){
+      const text=document.getElementById("cardText").value;
+      const blob=new Blob([text],{type:"text/plain"});
+      const a=document.createElement("a");
+      a.href=URL.createObjectURL(blob);
+      a.download="carta.txt";
       a.click();
-      a.remove();
-    }
-    function resetCardText(){
-      document.getElementById('cardText').innerText = "Escribe aquí tu carta...";
     }
 
-    /* ============== TRIVIA logic ============== */
-    let triviaIndex = 0;
-    let triviaScore = 0;
-    function renderQuestion(){
-      const q = TRIVIA_QUESTIONS[triviaIndex];
-      if(!q) {
-        document.getElementById('questionText').innerText = "No hay preguntas configuradas.";
-        return;
-      }
-      document.getElementById('questionText').innerText = q.q;
-      const optsEl = document.getElementById('options');
-      optsEl.innerHTML = '';
-      q.opts.forEach((opt, i) => {
-        const btn = document.createElement('button');
-        btn.className = 'opt-btn';
-        btn.innerText = opt;
-        btn.onclick = () => selectOption(i);
-        optsEl.appendChild(btn);
+    // 🔹 Trivia
+    const questions = [
+      {q:"¿Dónde fue nuestra primer encuentro?", options:["En mi U","En el portal 80","En un café","En el cloplaza"], correct:0},
+      {q:"¿Cuál es mi color favorito?", options:["Azul","Rojo","Verde"], correct:1},
+    ];
+    let current=0, score=0;
+    function loadQuestion(){
+      const q=questions[current];
+      document.getElementById("question").textContent=q.q;
+      const optionsDiv=document.getElementById("options");
+      optionsDiv.innerHTML="";
+      q.options.forEach((opt,i)=>{
+        const btn=document.createElement("button");
+        btn.textContent=opt;
+        btn.onclick=()=>checkAnswer(btn,i===q.correct);
+        optionsDiv.appendChild(btn);
       });
-      updateScore();
     }
-    function selectOption(i){
-      const q = TRIVIA_QUESTIONS[triviaIndex];
-      const optsEl = document.getElementById('options');
-      const buttons = optsEl.querySelectorAll('.opt-btn');
-      buttons.forEach((b, idx) => {
-        b.disabled = true;
-        if(idx === q.correct) b.classList.add('correct');
-        if(idx === i && i !== q.correct) b.classList.add('wrong');
-      });
-      if(i === q.correct) triviaScore++;
-      updateScore();
+    function checkAnswer(btn,correct){
+      if(correct){ btn.classList.add("correct"); score++; }
+      else btn.classList.add("wrong");
+      document.getElementById("score").textContent=score+"/"+questions.length;
     }
     function nextQuestion(){
-      triviaIndex++;
-      if(triviaIndex >= TRIVIA_QUESTIONS.length) triviaIndex = 0;
-      renderQuestion();
+      if(current<questions.length-1){ current++; loadQuestion(); }
     }
-    function restartTrivia(){
-      triviaIndex = 0; triviaScore = 0;
-      renderQuestion();
+    function resetTrivia(){
+      current=0; score=0;
+      document.getElementById("score").textContent="0";
+      loadQuestion();
     }
-    function updateScore(){
-      document.getElementById('score').innerText = `Puntaje: ${triviaScore} / ${TRIVIA_QUESTIONS.length}`;
-    }
-
-    /* ============== Inicialización ============== */
-    // build puzzle when image loaded
-    function init(){
-      // set card background
-      document.getElementById('card-img').style.backgroundImage = `url('${CARD_IMAGE}')`;
-
-      // prepare puzzle: ensure we preload the image to get correct size
-      const img = new Image();
-      img.src = PUZZLE_IMAGE;
-      img.onload = function(){
-        // create puzzle element size based on image natural size but limited
-        const max = Math.min(img.naturalWidth, 360);
-        // set puzzle CSS size
-        const p = document.getElementById('puzzle');
-        p.style.width = `${max}px`;
-        p.style.height = `${max}px`;
-        p.style.gridTemplateColumns = `repeat(${PUZZLE_COLS}, 1fr)`;
-        p.style.gridTemplateRows = `repeat(${PUZZLE_ROWS}, 1fr)`;
-        //	override tile background-size to match actual pixel size
-        buildPuzzle();
-        shufflePuzzle();
-      };
-      img.onerror = function(){ 
-        document.getElementById('puzzle').innerText = "No se encontró la imagen del rompecabezas. Asegúrate de subir " + PUZZLE_IMAGE + " al repo.";
-      };
-
-      // set youtube link
-      document.getElementById('youtube-link').href = YOUTUBE_LINK;
-
-      // start trivia
-      renderQuestion();
-    }
-
-    window.addEventListener('load', init);
-
+    loadQuestion();
   </script>
 </body>
 </html>
+
