@@ -26,6 +26,16 @@
       background: #fff;
       transition: 0.3s;
     }
+    
+    /* 🔹 Aquí pegas tu estilo nuevo */
+    .content-box {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 15px;
+      background: rgba(255,255,255,0.85);
+      border-radius: 12px;
+    }
+</style>
     nav button:hover {
       background: #ffd6e0;
     }
@@ -120,28 +130,29 @@
     <button onclick="showTab('trivia')">🎮 Jueguito</button>
   </nav>
 
-  <div class="panel">
-    <!-- 🔹 Solo esta primera empieza visible -->
-    <section id="music" class="active">
-       <div class="music">
-         <h2>Nuestra canción ❤</h2>
-      <p style="text-align:center">
-        Dale clic para escuchar nuestra canción favorita:<br>
-        <a href="https://youtu.be/PQlG1gznMBE?si=30PFaUKp2jIHyCBf">Haz clic aquí</a>
-      </p>
-    </section>
+  <section id="music" class="active">
+  <div class="content-box">
+    <h2>Nuestra canción ❤</h2>
+    <p style="text-align:center">
+      Dale clic para escuchar nuestra canción:<br>
+      <a href="https://youtu.be/PQlG1gznMBE?si=30PFaUKp2jIHyCBf">Haz clic aquí</a>
+    </p>
+  </div>
+</section>
 
-    <section id="counter">
-       <div class="counter">
-         <h2>Nuestro tiempo juntos ❤</h2>
-      <div class="counter">
-        <div><span id="months">0</span> Meses</div>
-        <div><span id="days">0</span> Días</div>
-        <div><span id="hours">0</span> Horas</div>
-        <div><span id="minutes">0</span> Minutos</div>
-        <div><span id="seconds">0</span> Segundos</div>
-      </div>
-    </section>
+<section id="counter">
+  <div class="content-box">
+    <h2>Nuestro tiempo juntos ❤</h2>
+    <div class="counter">
+      <div><span id="months">0</span> Meses</div>
+      <div><span id="days">0</span> Días</div>
+      <div><span id="hours">0</span> Horas</div>
+      <div><span id="minutes">0</span> Minutos</div>
+      <div><span id="seconds">0</span> Segundos</div>
+    </div>
+  </div>
+</section>
+
 
     <section id="puzzle">
       <div class="puzzle">
@@ -335,14 +346,24 @@ initPuzzle();
       else btn.classList.add("wrong");
       document.getElementById("score").textContent=score+"/"+questions.length;
     }
-    function nextQuestion(){
-      if(current<questions.length-1){ current++; loadQuestion(); }
-    }
-    function resetTrivia(){
-      current=0; score=0;
-      document.getElementById("score").textContent="0";
-      loadQuestion();
-    }
+   function nextQuestion(){
+  if(current < questions.length - 1){
+    current++;
+    loadQuestion();
+  } else {
+    // 🔹 Cuando ya no hay más preguntas
+    document.getElementById("question").textContent = "Te amo chocolatito 💖🐻";
+    document.getElementById("options").innerHTML = "";
+  }
+}
+
+function resetTrivia(){
+  current = 0; 
+  score = 0;
+  document.getElementById("score").textContent = "0";
+  loadQuestion();
+}
+
     loadQuestion();
   </script>
 </body>
