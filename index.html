@@ -37,7 +37,6 @@
       font-family: "ClavelCustom", Arial, sans-serif;
       color: var(--text-color);
       /* background se seteará por JS para que puedas cambiar la ruta fácilmente */
-      background-image: url(https://github.com/nattcjj/JUEGO_POLLO/blob/main/collage-background.jpg?raw=true);
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
@@ -227,11 +226,22 @@
     <section id="letter" class="center-column">
       <div>
         <h2 style="margin:0 0 8px 0;">Carta ❤</h2>
-        <div class="card-img" id="card-img" style="background-image: url('card-blank.jpg');">
+        <div class="card-img" id="card-img" style="background-image: url('https://github.com/nattcjj/JUEGO_POLLO/blob/main/card-blank.jpg?raw=true');">
           <!-- caja editable dentro de la imagen -->
           <div class="card-text" id="cardText" contenteditable="true" spellcheck="false" style="background: rgba(255,255,255,0.85);">
-            Escribe aquí tu carta (haz clic y edita). Cuando termines puedes copiar este texto y pegarlo en el repositorio o mantenerlo aquí (siempre que la página no se recargue perderás lo no guardado).
-          </div>
+            Mi chocolatito,
+
+Hoy quiero decirte lo especial que eres para mí. Nuestra relación es única, porque contigo siento una conexión que nunca antes había vivido. Es como si nuestras almas se hubieran encontrado en el momento perfecto para enseñarnos lo que significa amar de verdad.
+
+Contigo cada instante se vuelve mágico, incluso las cosas más simples son hermosas si las comparto a tu lado. Me haces sentir tranquila, feliz y afortunada de tener un amor tan auténtico, tan nuestro.
+
+Gracias por ser mi compañero, mi confidente, mi alegría diaria. No hay nada en este mundo que cambie lo que somos, porque lo que tenemos es diferente, especial y eterno.
+
+Eres mi chocolatito y siempre tendrás en mí a tu quesito, que te ama con todo el corazón.
+
+Con amor,
+Att: Tu quesito
+        </div>
         </div>
         <div class="card-edit">
           <button class="tab-btn" onclick="downloadCardText()">Guardar texto (descargar)</button>
@@ -267,6 +277,8 @@
        ===  CONFIGURA AQUI   ===
        ==========================
     */
+    // 1) Fondo (collage principal)
+    const BACKGROUND_IMAGE = 'https://github.com/nattcjj/JUEGO_POLLO/blob/main/collage-background.jpg?raw=true';
 
     // 2) Link de YouTube
     const YOUTUBE_LINK = 'https://youtu.be/PQlG1gznMBE?si=UX4M2A5xi-gAeiQ1'; // <-- reemplaza con tu link
@@ -281,17 +293,17 @@
     const TILE_SIZE = 360; // píxeles; ajusta CSS también si cambiaslo
 
     // 5) Mensaje que aparecerá cuando se resuelva el puzzle (puedes editar aquí)
-    let PUZZLE_SOLVED_MESSAGE = "¡Felicidades! Puedes escribir tu mensaje final aquí ❤";
+    let PUZZLE_SOLVED_MESSAGE = "Te amo mucho mi chocolatito <3";
 
     // 6) Carta: imagen de la "hoja" que usarás
-    const CARD_IMAGE = 'card-blank.jpg'; // <-- SUBE tu imagen de carta / hoja en blanco
+    const CARD_IMAGE = 'https://github.com/nattcjj/JUEGO_POLLO/blob/main/card-blank.jpg?raw=true'; // <-- SUBE tu imagen de carta / hoja en blanco
 
     // 7) Trivia: preguntas (edítalas aquí, cada 'correct' es índice 0..3)
     const TRIVIA_QUESTIONS = [
-      { q: "¿Dónde fue nuestra primer encuentro?", opts: ["En mi U", "En el portal 80", "En un café", "En el coplaza"], correct: 2 },
-      { q: "¿Cuando fue nuestro primer beso?", opts: ["13 de mayo", "20 de mayo", "18 de mayo", "3 de junio"], correct: 1 },
-      { q: "¿Qué es lo que más me gusta de tí?", opts: ["Tu boca", "Tus ojos", "Tus manos", "Tu olor"], correct: 2 },
-      { q: "¿Qué nos  gusta comer?", opts: ["Sushi", "Lasagna", "Hamburguesa", "Salchipapa"], correct: 4 }
+      { q: "¿Dónde fue nuestra primer encuentro?", opts: ["En mi U", "En el portal 80", "En un café", "En el coplaza"], correct: 1 },
+      { q: "¿Cuando fue nuestro primer beso?", opts: ["13 de mayo", "20 de mayo", "18 de mayo", "3 de junio"], correct: 0 },
+      { q: "¿Qué es lo que más me gusta de tí?", opts: ["Tu boca", "Tus ojos", "Tus manos", "Tu olor"], correct: 1 },
+      { q: "¿Qué nos  gusta comer?", opts: ["Sushi", "Lasagna", "Hamburguesa", "Salchipapa"], correct: 3 }
     ];
     /* ==========================
        ===  FIN CONFIGURACIÓN ===
@@ -313,4 +325,254 @@
     }
 
     /* ============== contador detallado ============== */
-    const start = n
+    const start = new Date(START_DATE);
+    function updateCounter(){
+      const now = new Date();
+      let diff = Math.max(0, now - start); // ms
+
+      // De forma clara: calcular meses aproximados + resto
+      const years = now.getFullYear() - start.getFullYear();
+      const monthsTotal = years * 12 + (now.getMonth() - start.getMonth());
+      const tempStartPlusMonths = new Date(start.getTime());
+      tempStartPlusMonths.setMonth(start.getMonth() + monthsTotal);
+      let remMs = now - tempStartPlusMonths;
+      if(remMs < 0){
+        // si la cuenta por meses quedó grande, resta un mes
+        tempStartPlusMonths.setMonth(tempStartPlusMonths.getMonth() - 1);
+        remMs = now - tempStartPlusMonths;
+      }
+      const days = Math.floor(remMs / (1000*60*60*24));
+      const hours = Math.floor((remMs % (1000*60*60*24)) / (1000*60*60));
+      const minutes = Math.floor((remMs % (1000*60*60)) / (1000*60));
+      const seconds = Math.floor((remMs % (1000*60)) / 1000);
+
+      // muestra meses, días, horas, minutos, segundos
+      document.getElementById('months').innerText = monthsTotal;
+      document.getElementById('days').innerText = days;
+      document.getElementById('hours').innerText = hours;
+      document.getElementById('minutes').innerText = minutes;
+      document.getElementById('seconds').innerText = seconds;
+    }
+    updateCounter();
+    setInterval(updateCounter, 1000);
+
+    /* ============== ROMPECABEZAS (sliding-like con blank) ============== */
+    const puzzleElem = document.getElementById('puzzle');
+    let tiles = [];
+    let blankIndex = (PUZZLE_ROWS*PUZZLE_COLS)-1;
+
+    function buildPuzzle(){
+      puzzleElem.innerHTML = '';
+      tiles = [];
+      const W = puzzleElem.clientWidth || TILE_SIZE;
+      const H = puzzleElem.clientHeight || TILE_SIZE;
+
+      // ajustamos background-size en línea para que las tiles encajen
+      const bgSize = `${W}px ${H}px`;
+      // crear N tiles
+      const total = PUZZLE_ROWS * PUZZLE_COLS;
+      for(let r=0;r<PUZZLE_ROWS;r++){
+        for(let c=0;c<PUZZLE_COLS;c++){
+          const idx = r*PUZZLE_COLS + c;
+          const tile = document.createElement('div');
+          tile.classList.add('tile');
+          tile.style.width = (W/PUZZLE_COLS) + 'px';
+          tile.style.height = (H/PUZZLE_ROWS) + 'px';
+          if(idx === total-1){
+            tile.classList.add('blank');
+            tile.dataset.index = idx;
+            tile.style.background = 'none';
+          } else {
+            tile.style.backgroundImage = `url(${PUZZLE_IMAGE})`;
+            tile.style.backgroundSize = bgSize;
+            const posX = (-(c*(W/PUZZLE_COLS))) + 'px';
+            const posY = (-(r*(H/PUZZLE_ROWS))) + 'px';
+            tile.style.backgroundPosition = `${posX} ${posY}`;
+            tile.dataset.index = idx;
+            tile.addEventListener('click', ()=> tryMove(idx));
+          }
+          tiles.push(tile);
+          puzzleElem.appendChild(tile);
+        }
+      }
+      blankIndex = total - 1;
+    }
+
+    function swapTiles(i, j){
+      const a = tiles[i];
+      const b = tiles[j];
+      // swap background & classes
+      const cloneA = a.cloneNode(true);
+      const cloneB = b.cloneNode(true);
+      puzzleElem.replaceChild(cloneB, a);
+      puzzleElem.replaceChild(cloneA, b);
+      tiles[i] = cloneB;
+      tiles[j] = cloneA;
+
+      // reattach event listeners for clickable tiles
+      const total = tiles.length;
+      for(let k=0;k<total;k++){
+        const t = tiles[k];
+        t.addEventListener('click', ()=> {
+          const idx = parseInt(t.dataset.index);
+          tryMove(idx);
+        });
+      }
+    }
+
+    function tryMove(tileOriginalIndex){
+      // find current index in tiles array of the tile with dataset.index == tileOriginalIndex
+      let currentPos = tiles.findIndex(t => parseInt(t.dataset.index) === tileOriginalIndex);
+      if(currentPos === -1) return;
+      // blank is at blankIndex
+      const diff = Math.abs(currentPos - blankIndex);
+      // allow move if neighbor (left/right/up/down)
+      const cols = PUZZLE_COLS;
+      const isNeighbor = (diff === 1 && Math.floor(currentPos/cols) === Math.floor(blankIndex/cols)) || (diff === cols);
+      if(isNeighbor){
+        swapTiles(currentPos, blankIndex);
+        blankIndex = currentPos;
+        checkPuzzleSolved();
+      }
+    }
+
+    function shufflePuzzle(){
+      const moves = PUZZLE_COLS * PUZZLE_ROWS * 20;
+      for(let i=0;i<moves;i++){
+        const possible = [];
+        const cols = PUZZLE_COLS;
+        const up = blankIndex - cols;
+        const down = blankIndex + cols;
+        const left = (blankIndex % cols !== 0) ? blankIndex -1 : -1;
+        const right = (blankIndex % cols !== cols-1) ? blankIndex +1 : -1;
+        [up,down,left,right].forEach(x=>{ if(x>=0 && x < tiles.length) possible.push(x); });
+        const pick = possible[Math.floor(Math.random()*possible.length)];
+        swapTiles(pick, blankIndex);
+        blankIndex = pick;
+      }
+      // limpia posible mensaje previo
+      document.getElementById('puzzle-msg').innerText = '';
+    }
+
+    function resetPuzzle(){ buildPuzzle(); }
+
+    function checkPuzzleSolved(){
+      // solved if tiles[i].dataset.index == i for all
+      const ok = tiles.every((t, i) => parseInt(t.dataset.index) === i);
+      if(ok){
+        document.getElementById('puzzle-msg').innerText = PUZZLE_SOLVED_MESSAGE;
+      }
+    }
+
+    // permite editar el mensaje en la UI
+    function enablePuzzleMessageEdit(){
+      const el = document.getElementById('puzzle-msg');
+      el.contentEditable = true;
+      el.focus();
+      el.innerText = PUZZLE_SOLVED_MESSAGE;
+      // guardar cambios al perder foco
+      el.onblur = function(){
+        PUZZLE_SOLVED_MESSAGE = el.innerText || PUZZLE_SOLVED_MESSAGE;
+        el.contentEditable = false;
+      };
+    }
+
+    /* ============== Carta logic ============== */
+    document.getElementById('cardText').addEventListener('input', function(){ /* queda editable */ });
+    function downloadCardText(){
+      const text = document.getElementById('cardText').innerText;
+      const blob = new Blob([text], { type: 'text/plain' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'mi-carta.txt';
+      a.click();
+      a.remove();
+    }
+    function resetCardText(){
+      document.getElementById('cardText').innerText = "Escribe aquí tu carta...";
+    }
+
+    /* ============== TRIVIA logic ============== */
+    let triviaIndex = 0;
+    let triviaScore = 0;
+    function renderQuestion(){
+      const q = TRIVIA_QUESTIONS[triviaIndex];
+      if(!q) {
+        document.getElementById('questionText').innerText = "No hay preguntas configuradas.";
+        return;
+      }
+      document.getElementById('questionText').innerText = q.q;
+      const optsEl = document.getElementById('options');
+      optsEl.innerHTML = '';
+      q.opts.forEach((opt, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'opt-btn';
+        btn.innerText = opt;
+        btn.onclick = () => selectOption(i);
+        optsEl.appendChild(btn);
+      });
+      updateScore();
+    }
+    function selectOption(i){
+      const q = TRIVIA_QUESTIONS[triviaIndex];
+      const optsEl = document.getElementById('options');
+      const buttons = optsEl.querySelectorAll('.opt-btn');
+      buttons.forEach((b, idx) => {
+        b.disabled = true;
+        if(idx === q.correct) b.classList.add('correct');
+        if(idx === i && i !== q.correct) b.classList.add('wrong');
+      });
+      if(i === q.correct) triviaScore++;
+      updateScore();
+    }
+    function nextQuestion(){
+      triviaIndex++;
+      if(triviaIndex >= TRIVIA_QUESTIONS.length) triviaIndex = 0;
+      renderQuestion();
+    }
+    function restartTrivia(){
+      triviaIndex = 0; triviaScore = 0;
+      renderQuestion();
+    }
+    function updateScore(){
+      document.getElementById('score').innerText = `Puntaje: ${triviaScore} / ${TRIVIA_QUESTIONS.length}`;
+    }
+
+    /* ============== Inicialización ============== */
+    // build puzzle when image loaded
+    function init(){
+      // set card background
+      document.getElementById('card-img').style.backgroundImage = `url('${CARD_IMAGE}')`;
+
+      // prepare puzzle: ensure we preload the image to get correct size
+      const img = new Image();
+      img.src = PUZZLE_IMAGE;
+      img.onload = function(){
+        // create puzzle element size based on image natural size but limited
+        const max = Math.min(img.naturalWidth, 360);
+        // set puzzle CSS size
+        const p = document.getElementById('puzzle');
+        p.style.width = `${max}px`;
+        p.style.height = `${max}px`;
+        p.style.gridTemplateColumns = `repeat(${PUZZLE_COLS}, 1fr)`;
+        p.style.gridTemplateRows = `repeat(${PUZZLE_ROWS}, 1fr)`;
+        //	override tile background-size to match actual pixel size
+        buildPuzzle();
+        shufflePuzzle();
+      };
+      img.onerror = function(){ 
+        document.getElementById('puzzle').innerText = "No se encontró la imagen del rompecabezas. Asegúrate de subir " + PUZZLE_IMAGE + " al repo.";
+      };
+
+      // set youtube link
+      document.getElementById('youtube-link').href = YOUTUBE_LINK;
+
+      // start trivia
+      renderQuestion();
+    }
+
+    window.addEventListener('load', init);
+
+  </script>
+</body>
+</html>
